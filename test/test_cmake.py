@@ -32,8 +32,8 @@ class TestPyCMake(unittest2.TestCase):
         self.assertFalse(under_test.project)
         under_test.add_settings('VERSION 3.5', 'VERSION 3.5')
 
-        self.assertEqual('VERSION 3.5', under_test.min_required)
-        self.assertEqual('VERSION 3.5', under_test.policy)
+        self.assertEqual('VERSION 3.5', under_test.settings['min_required'])
+        self.assertEqual('VERSION 3.5', under_test.settings['policy'])
 
     def test_add_project(self):
         under_test = CMake()
@@ -54,11 +54,20 @@ class TestPyCMake(unittest2.TestCase):
         self.assertEqual(0, under_test.project.get('version').patch)
         self.assertEqual(580, under_test.project.get('version').tweak)
 
-    def test_compiler_are_create(self):
+    def test_add_compiler(self):
         under_test = CMake()
 
-        under_test.add_project('project', 'CXX')
+        under_test.add_compiler('Clang++-Debian', 'c++', 'clang++', 3.7, '/usr/bin/clang++-3.7')
 
-        self.assertIsNotNone(under_test.project.get('compilers'))
+        self.assertTrue(under_test.project.get('compilers')['Clang++-Debian'])
+
+    def test_add_multiple_compiler(self):
+        under_test = CMake()
+
+        under_test.add_compiler('Clang++-Debian', 'c++', 'clang++', 3.7, '/usr/bin/clang++-3.7')
+        under_test.add_compiler('GCC-Debian', 'C', 'gcc', 5, '/usr/bin/gcc-5')
+
+        self.assertTrue(under_test.project.get('compilers')['Clang++-Debian'])
+        self.assertTrue(under_test.project.get('compilers')['GCC-Debian'])
 
 

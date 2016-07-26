@@ -23,7 +23,7 @@ from cmake.flags import Flags
 from cmake.externals import Externals
 from cmake.variables import Variables
 
-class CMakeProject(object):
+class Project(object):
     """
         CMakeProject contains all data related to project.
     """

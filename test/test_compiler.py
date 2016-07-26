@@ -29,17 +29,21 @@ class TestCompiler(unittest2.TestCase):
     def test_add_c_compiler(self):
         under_test = Compiler()
 
-        under_test.add_c_compiler('gcc', '5')
+        under_test.create_compiler('GCC-Debian', 'C', 'gcc', 5, '/usr/bin/gcc-5')
 
-        self.assertEqual('gcc', under_test.c_compiler['name'])
-        self.assertEqual('5', under_test.c_compiler['version'])
-        self.assertEqual('/usr/bin/gcc-5', under_test.c_compiler['path'])
+        self.assertEqual('GCC-Debian', under_test.name)
+        self.assertEqual('C', under_test.language)
+        self.assertEqual('gcc', under_test.compiler)
+        self.assertEqual(5, under_test.version)
+        self.assertEqual('/usr/bin/gcc-5', under_test.executable)
 
     def test_add_cpp_compiler(self):
         under_test = Compiler()
 
-        under_test.add_cpp_compiler('clang++', '5')
+        under_test.create_compiler('Clang++-Debian', 'c++', 'clang++', 3.7, '/usr/bin/clang++-3.7')
 
-        self.assertEqual('clang++', under_test.cpp_compiler['name'])
-        self.assertEqual('5', under_test.cpp_compiler['version'])
-        self.assertEqual('/usr/bin/clang++-5', under_test.cpp_compiler['path'])
+        self.assertEqual('Clang++-Debian', under_test.name)
+        self.assertEqual('c++', under_test.language)
+        self.assertEqual('clang++', under_test.compiler)
+        self.assertEqual(3.7, under_test.version)
+        self.assertEqual('/usr/bin/clang++-3.7', under_test.executable)

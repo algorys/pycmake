@@ -17,40 +17,57 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with PyCMake.  If not, see <http://www.gnu.org/licenses/>.
 
+from enum import Enum
+
 class Compiler(object):
-    supported_c_compiler = [
+    language_supported = [
+        'C',
+        'c',
+        'C++',
+        'c++',
+    ]
+
+    c_compiler_supported = [
         'gcc',
         'clang',
         'MSVC'
     ]
 
-    supported_cpp_compiler = [
+    cpp_compiler_supported = [
         'g++',
         'clang++',
         'MSVC'
     ]
 
+
     def __init__(self):
-        self.c_compiler = None
-        self.cpp_compiler = None
-        self.cpp_version = "c++11"
+        self.name = None
+        self.version = None
+        self.language = None
+        self.compiler = None
+        self.executable = None
 
-    def add_c_compiler(self, name='gcc', version='5'):
-        if name not in Compiler.supported_c_compiler:
-            raise ValueError('This C compiler is not currently supported : ' + name)
-        else:
-            self.c_compiler = {
-                'name': name,
-                'version': version,
-                'path': '/usr/bin/' + name + '-' + version
-            }
+    @staticmethod
+    def check_compiler_options(language, compiler, version):
+        if not isinstance(version, int) and not isinstance(version, float):
+            raise ValueError('Version must be an integer or a float !')
+        if language not in Compiler.language_supported:
+            raise ValueError('Language ' + language + ' is not currently supported !')
+        if language is 'C' or language is 'c':
+            if compiler not in Compiler.c_compiler_supported:
+                raise ValueError('C compiler ' + compiler + ' is not currently supported !')
+        if language is 'C++' or language is 'c++':
+            if compiler not in Compiler.cpp_compiler_supported:
+                raise ValueError('C++ compiler ' + compiler + ' is not currently supported !')
 
-    def add_cpp_compiler(self, name='g++', version='5'):
-        if name not in Compiler.supported_cpp_compiler:
-            raise ValueError('This C++ compiler is not currently supported : ' + name)
-        else:
-            self.cpp_compiler = {
-                'name': name,
-                'version': version,
-                'path': '/usr/bin/' + name + '-' + version
-            }
+    def create_compiler(self, name='gcc', language='C', compiler='gcc', version=5, executable='/usr/bin/gcc-5'):
+        Compiler.check_compiler_options(language, compiler, version)
+        self.name = name
+        self.language = language
+        self.version = version
+        self.compiler = compiler
+        self.executable = executable
+
+
+
+

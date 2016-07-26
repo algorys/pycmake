@@ -32,13 +32,15 @@ class CMake(object):
 
     def __init__(self):
         self.project = {}
-        self.policy = None
-        self.min_required = None
+        self.settings = None
+        # self.min_required = None
         self.cmakelist = None
 
     def add_settings(self, min_required='VERSION 3.0', policy='VERSION 3.0'):
-        self.min_required = min_required
-        self.policy = policy
+        self.settings = {
+            'min_required': min_required,
+            'policy': policy
+        }
 
     def add_project(self, name, language):
         if 'C' == language or 'CXX' == language or '' == language:
@@ -47,15 +49,21 @@ class CMake(object):
                 'language': language
             }
         else:
-            raise ValueError('Sorry, ' + language + ' is not currently supported !')
-        if self.project['project']:
-            compilers = Compiler()
-            self.project['compilers'] = compilers
+            raise ValueError('Language ' + language + ' is not currently supported !')
 
     def add_version(self, major=0, minor=0, patch=0, tweak=0):
         version = ProjectVersion(major=major, minor=minor, patch=patch, tweak=tweak)
         self.project['version'] = version
 
+    def add_compiler(self, name, language, compiler, version, executable):
+        new_compiler = Compiler()
+        new_compiler.create_compiler(name, language, compiler, version, executable)
+        if 'compilers' in self.project:
+            self.project['compilers'][name] = new_compiler
+        else:
+            self.project['compilers'] = {
+                name: new_compiler
+            }
 
     def init_cmakelist(self):
         self.cmakelist = CMakeLists()

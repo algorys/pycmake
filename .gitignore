@@ -6,3 +6,7 @@
 *.pyc
 __pycache__/
 .coverage
+
+# Test
+test/bin
+

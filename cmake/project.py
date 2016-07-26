@@ -28,24 +28,24 @@ class Project(object):
         CMakeProject contains all data related to project.
     """
 
-    def __init__(self, name, langage):
+    def __init__(self, name='project', language='CXX'):
         """
 
         :param name: name of CMake Project. Default: 'project'
         :param langage: type of langage.
         """
-        self.name = name
-        self.langage = ''
-        self.version = None
-        self.compiler = None
-        self.flags = None
-        self.externals = None
-        self.variables = None
 
-    def init_project(self):
-        self.version = ProjectVersion(0,0,0,0)
-        self.compiler = Compiler()
-        self.flags = Flags()
-        self.externals = Externals()
-        self.variables = Variables()
+        self.settings = {
+            'name': name,
+            'language': language
+        }
+        self.version = None
+
+    def add_settings(self, min_required='VERSION 3.0', policy='VERSION 3.0'):
+        self.settings['min_required'] = min_required
+        self.settings['policy'] = policy
+
+    def add_version(self, major=0, minor=0, patch=0, tweak=0):
+        version = ProjectVersion(major=major, minor=minor, patch=patch, tweak=tweak)
+        self.version = version
 

@@ -16,35 +16,21 @@
 import unittest2
 
 from cmake.flags import Flags
+from cmake.compiler import Compiler
 
 class TestFlags(unittest2.TestCase):
     """
         This file test Flags class
     """
 
-    def test_gcc_flags(self):
+    def test_add_flags_to_compiler(self):
         under_test = Flags()
+        compiler = Compiler()
+        compiler.create_compiler('Clang++-Debian', 'CXX', 'clang++', 3.7, '/usr/bin/clang++-3.7')
 
-        under_test.define_gcc_flags('-std=c++11', '-O2', '-w')
+        under_test.add_flags_to_compiler(compiler, '/W4', '/MDd', '/GL')
 
-        self.assertEqual('-std=c++11', under_test.gcc_flags['general'])
-        self.assertEqual('-O2', under_test.gcc_flags['debug'])
-        self.assertEqual('-w', under_test.gcc_flags['release'])
-
-    def test_clang_flags(self):
-        under_test = Flags()
-
-        under_test.define_clang_flags('-std=c++11 -stdlib=libc++', '-O2', '-w')
-
-        self.assertEqual('-std=c++11 -stdlib=libc++', under_test.clang_flags['general'])
-        self.assertEqual('-O2', under_test.clang_flags['debug'])
-        self.assertEqual('-w', under_test.clang_flags['release'])
-
-    def test_msvc_flags(self):
-        under_test = Flags()
-
-        under_test.define_msvc_flags('/W4', '/MDd', '/GL')
-
-        self.assertEqual('/W4', under_test.msvc_flags['general'])
-        self.assertEqual('/MDd', under_test.msvc_flags['debug'])
-        self.assertEqual('/GL', under_test.msvc_flags['release'])
+        self.assertEqual('clang++', under_test.compiler)
+        self.assertEqual('/W4', under_test.general)
+        self.assertEqual('/MDd', under_test.debug)
+        self.assertEqual('/GL', under_test.release)

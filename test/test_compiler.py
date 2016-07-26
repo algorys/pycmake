@@ -40,10 +40,10 @@ class TestCompiler(unittest2.TestCase):
     def test_add_cpp_compiler(self):
         under_test = Compiler()
 
-        under_test.create_compiler('Clang++-Debian', 'c++', 'clang++', 3.7, '/usr/bin/clang++-3.7')
+        under_test.create_compiler('Clang++-Debian', 'CXX', 'clang++', 3.7, '/usr/bin/clang++-3.7')
 
         self.assertEqual('Clang++-Debian', under_test.name)
-        self.assertEqual('c++', under_test.language)
+        self.assertEqual('CXX', under_test.language)
         self.assertEqual('clang++', under_test.compiler)
         self.assertEqual(3.7, under_test.version)
         self.assertEqual('/usr/bin/clang++-3.7', under_test.executable)

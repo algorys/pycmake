@@ -17,33 +17,27 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with PyCMake.  If not, see <http://www.gnu.org/licenses/>.
 
+from cmake.compiler import *
+
 class Flags(object):
     """
         Flags keep flags for compilations
     """
 
     def __init__(self):
-        self.gcc_flags = None
-        self.clang_flags = None
-        self.msvc_flags = None
+        self.compiler = None
+        self.general = None
+        self.debug = None
+        self.release = None
 
-    def define_gcc_flags(self, general, debug, release):
-        self.gcc_flags = {
-            'general': general,
-            'debug': debug,
-            'release': release
-        }
+    def add_flags_to_compiler(self, compiler: Compiler, general, debug, release):
+        if not isinstance(compiler, Compiler):
+            raise AttributeError("Waiting for <class 'Compiler'> object. Get : " + str(type(compiler)) + ' instead !')
+        if compiler.compiler is None or compiler.name is None:
+            raise ValueError('Your Compiler seems not to have been created : ' + str(compiler.compiler))
 
-    def define_clang_flags(self, general, debug, release):
-        self.clang_flags = {
-            'general': general,
-            'debug': debug,
-            'release': release
-        }
+        self.compiler = compiler.compiler
+        self.general = general
+        self.debug = debug
+        self.release = release
 
-    def define_msvc_flags(self, general, debug, release):
-        self.msvc_flags = {
-            'general': general,
-            'debug': debug,
-            'release': release
-        }

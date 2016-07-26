@@ -17,13 +17,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with PyCMake.  If not, see <http://www.gnu.org/licenses/>.
 
-# from cmake.project import CMakeProject
+from cmake.project import Project
 from cmake.cmakelists import CMakeLists
-from cmake.version import ProjectVersion
 from cmake.compiler import Compiler
-from cmake.flags import Flags
-from cmake.externals import Externals
-from cmake.variables import Variables
+
 
 class CMake(object):
     """
@@ -31,39 +28,20 @@ class CMake(object):
     """
 
     def __init__(self):
-        self.project = {}
-        self.settings = None
-        # self.min_required = None
+        self.project = None
+        self.compilers = {}
         self.cmakelist = None
 
-    def add_settings(self, min_required='VERSION 3.0', policy='VERSION 3.0'):
-        self.settings = {
-            'min_required': min_required,
-            'policy': policy
-        }
-
-    def add_project(self, name, language):
-        if 'C' == language or 'CXX' == language or '' == language:
-            self.project['project'] = {
-                'name': name,
-                'language': language
-            }
+    def add_project(self, name='project', language=''):
+        if language == 'C' or language == 'CXX' or language == '':
+            self.project = Project(name, language)
         else:
             raise ValueError('Language ' + language + ' is not currently supported !')
-
-    def add_version(self, major=0, minor=0, patch=0, tweak=0):
-        version = ProjectVersion(major=major, minor=minor, patch=patch, tweak=tweak)
-        self.project['version'] = version
 
     def add_compiler(self, name, language, compiler, version, executable):
         new_compiler = Compiler()
         new_compiler.create_compiler(name, language, compiler, version, executable)
-        if 'compilers' in self.project:
-            self.project['compilers'][name] = new_compiler
-        else:
-            self.project['compilers'] = {
-                name: new_compiler
-            }
+        self.compilers[name] = new_compiler
 
     def init_cmakelist(self):
         self.cmakelist = CMakeLists()

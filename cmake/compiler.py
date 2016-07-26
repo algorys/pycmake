@@ -17,28 +17,12 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with PyCMake.  If not, see <http://www.gnu.org/licenses/>.
 
-from enum import Enum
+from cmake.supported import *
 
 class Compiler(object):
-    language_supported = [
-        'C',
-        'c',
-        'C++',
-        'c++',
-    ]
-
-    c_compiler_supported = [
-        'gcc',
-        'clang',
-        'MSVC'
-    ]
-
-    cpp_compiler_supported = [
-        'g++',
-        'clang++',
-        'MSVC'
-    ]
-
+    """
+        Compiler define a compiler.
+    """
 
     def __init__(self):
         self.name = None
@@ -51,22 +35,25 @@ class Compiler(object):
     def check_compiler_options(language, compiler, version):
         if not isinstance(version, int) and not isinstance(version, float):
             raise ValueError('Version must be an integer or a float !')
-        if language not in Compiler.language_supported:
+        if language not in Language.__members__:
             raise ValueError('Language ' + language + ' is not currently supported !')
-        if language is 'C' or language is 'c':
-            if compiler not in Compiler.c_compiler_supported:
+        if language is Language.C:
+            if compiler not in CCompiler.__members__:
                 raise ValueError('C compiler ' + compiler + ' is not currently supported !')
-        if language is 'C++' or language is 'c++':
-            if compiler not in Compiler.cpp_compiler_supported:
+        if language is Language.CXX:
+            if compiler not in CXXCompiler.__members__:
                 raise ValueError('C++ compiler ' + compiler + ' is not currently supported !')
 
-    def create_compiler(self, name='gcc', language='C', compiler='gcc', version=5, executable='/usr/bin/gcc-5'):
+    def create_compiler(self, name='gcc', language='', compiler='gcc', version=5, executable='/usr/bin/gcc-5'):
         Compiler.check_compiler_options(language, compiler, version)
         self.name = name
         self.language = language
         self.version = version
         self.compiler = compiler
         self.executable = executable
+
+
+
 
 
 

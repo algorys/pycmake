@@ -19,7 +19,7 @@
 
 import unittest2
 
-from cmake.externals import Externals
+from cmake.externals import Externals, DependsType
 
 class TestExternals(unittest2.TestCase):
     """
@@ -29,23 +29,24 @@ class TestExternals(unittest2.TestCase):
     def test_externals(self):
         under_test = Externals()
 
-        under_test.add_dependency('zlib', 'dependencies/zlib')
+        under_test.add_dependency(DependsType.PACKAGE, 'zlib', 'dependencies/zlib')
 
+        self.assertEqual(DependsType.PACKAGE, under_test.dependencies.get('zlib')['type'])
         self.assertEqual('zlib', under_test.dependencies.get('zlib')['name'])
         self.assertEqual('dependencies/zlib', under_test.dependencies.get('zlib')['path'])
-        self.assertEqual(True, under_test.dependencies.get('zlib')['binary'])
+
 
     def test_multiple_externals(self):
         under_test = Externals()
 
-        under_test.add_dependency('zlib', 'dependencies/zlib')
+        under_test.add_dependency(DependsType.CMAKEPROJECT, 'graphics', '../../graphics')
 
-        self.assertEqual('zlib', under_test.dependencies.get('zlib')['name'])
-        self.assertEqual('dependencies/zlib', under_test.dependencies.get('zlib')['path'])
-        self.assertEqual(True, under_test.dependencies.get('zlib')['binary'])
+        self.assertEqual(DependsType.CMAKEPROJECT, under_test.dependencies.get('graphics')['type'])
+        self.assertEqual('graphics', under_test.dependencies.get('graphics')['name'])
+        self.assertEqual('../../graphics', under_test.dependencies.get('graphics')['path'])
 
-        under_test.add_dependency('core', 'project/core', False)
+        under_test.add_dependency(DependsType.BINARYFILE, 'core', 'dependencies/core')
 
+        self.assertEqual(DependsType.BINARYFILE, under_test.dependencies.get('core')['type'])
         self.assertEqual('core', under_test.dependencies.get('core')['name'])
-        self.assertEqual('project/core', under_test.dependencies.get('core')['path'])
-        self.assertEqual(False, under_test.dependencies.get('core')['binary'])
+        self.assertEqual('dependencies/core', under_test.dependencies.get('core')['path'])

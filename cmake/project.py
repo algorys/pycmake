@@ -18,6 +18,7 @@
 # along with PyCMake.  If not, see <http://www.gnu.org/licenses/>.
 
 from cmake.version import ProjectVersion
+from cmake.variables import Variables
 
 
 class Project(object):
@@ -25,18 +26,24 @@ class Project(object):
         CMakeProject contains all data related to project.
     """
 
-    def __init__(self, name='project', language='CXX'):
+    def __init__(self):
         """
 
         :param name: name of CMake Project. Default: 'project'
         :param language: type of langage.
         """
 
+        self.settings = {}
+        self.version = None
+        self.variables = Variables()
+
+    def create(self, name, language='', version=''):
         self.settings = {
             'name': name,
             'language': language
         }
-        self.version = None
+        self.version = version
+        self.variables.add('PROJECT_NAME', name, option='filename_component')
 
     def add_settings(self, min_required='VERSION 3.0', policy='VERSION 3.0'):
         self.settings['min_required'] = min_required

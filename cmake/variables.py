@@ -23,25 +23,11 @@ class Variables(object):
     """
 
     def __init__(self):
-        self.project_dir = None
-        self.sources_dir = None
-        self.output_dirs = None
-        self.custom_variables = {}
+        self.variables = {}
 
-    def define_project_dir(self, name, directory):
-        self.project_dir = {
+    def add(self, name, value, option=''):
+        self.variables[name] = {
             'name': name,
-            'dir': directory,
-        }
-
-    def define_sources_dir(self, name, directory):
-        self.sources_dir[name] = {
-            'name': name,
-            'dir': directory,
-        }
-
-    def add_custom_var(self, name, value):
-        self.custom_variables[name] = {
-            'name': name,
-            'value': value
+            'dir': value,
+            'option': option
         }

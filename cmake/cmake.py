@@ -35,7 +35,8 @@ class CMake(object):
 
     def add_project(self, name='project', language=''):
         if language == 'C' or language == 'CXX' or language == '':
-            self.project = Project(name, language)
+            self.project = Project()
+            self.project.create(name, language)
         else:
             raise ValueError('Language ' + language + ' is not currently supported !')
 

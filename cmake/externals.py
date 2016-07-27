@@ -17,6 +17,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with PyCMake.  If not, see <http://www.gnu.org/licenses/>.
 
+from enum import Enum
+
+
+class DependsType(Enum):
+    CMAKEPROJECT = 1
+    PACKAGE = 2
+    BINARYFILE = 3
+
 class Externals(object):
     """
         Externals contains all dependencies related to project.
@@ -25,16 +33,18 @@ class Externals(object):
     def __init__(self):
         self.dependencies={}
 
-    def add_dependency(self, name='lib', path='', binary=True):
+    def add_dependency(self, depends_type: DependsType, name, path='', ):
         """
 
+        :param depends_type: indicate type of external.
+        :type depends_type: Enum.
         :param name: name of library.
         :param path: path of the library
-        :param binary: tell if that's a binary. Otherwise search for a cmake project.
-        :return:
         """
+
         self.dependencies[name] = {
+            'type': depends_type,
             'name': name,
             'path': path,
-            'binary': binary,
         }
+

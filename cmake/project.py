@@ -17,6 +17,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with PyCMake.  If not, see <http://www.gnu.org/licenses/>.
 
+import os
+
 from cmake.version import ProjectVersion
 from cmake.variables import Variables
 
@@ -27,23 +29,25 @@ class Project(object):
     """
 
     def __init__(self):
-        """
-
-        :param name: name of CMake Project. Default: 'project'
-        :param language: type of langage.
-        """
-
         self.settings = {}
         self.version = None
         self.variables = Variables()
 
-    def create(self, name, language='', version=''):
+    def create(self, name, language=''):
         self.settings = {
             'name': name,
             'language': language
         }
-        self.version = version
         self.variables.add('PROJECT_NAME', name, option='filename_component')
+
+    def set_project_dir(self, path):
+        if not os.path.exists(path):
+            raise ValueError('This path does not exists : ' + path)
+        elif not self.settings:
+            raise KeyError('Project has no name, you must create it before.')
+        else:
+            var_name = self.settings['name'].upper() + '_DIR'
+            self.variables.add(var_name, path, option='set')
 
     def add_settings(self, min_required='VERSION 3.0', policy='VERSION 3.0'):
         self.settings['min_required'] = min_required

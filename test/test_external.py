@@ -19,7 +19,7 @@
 
 import unittest2
 
-from cmake.externals import Externals, DependsType
+from pycmake.externals import Externals, DependsType
 
 class TestExternals(unittest2.TestCase):
     """

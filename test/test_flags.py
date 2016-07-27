@@ -15,8 +15,8 @@
 
 import unittest2
 
-from cmake.flags import Flags
-from cmake.cmake import CMake
+from pycmake.flags import Flags
+from pycmake.cmake import CMake
 
 
 class TestFlags(unittest2.TestCase):

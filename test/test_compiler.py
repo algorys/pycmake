@@ -19,7 +19,7 @@
 
 import unittest2
 
-from cmake.compiler import Compiler
+from pycmake.compiler import Compiler
 
 class TestCompiler(unittest2.TestCase):
     """

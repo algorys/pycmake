@@ -19,8 +19,8 @@
 
 import os
 
-from cmake.version import ProjectVersion
-from cmake.variables import Variables
+from pycmake.version import ProjectVersion
+from pycmake.variables import Variables
 
 
 class Project(object):

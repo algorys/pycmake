@@ -19,7 +19,7 @@
 
 import unittest2
 
-from cmake.project import Project
+from pycmake.project import Project
 
 class TestProject(unittest2.TestCase):
     """

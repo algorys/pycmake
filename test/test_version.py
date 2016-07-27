@@ -19,7 +19,7 @@
 
 import unittest2
 
-from cmake.version import ProjectVersion
+from pycmake.version import ProjectVersion
 
 class TestVersion(unittest2.TestCase):
     """

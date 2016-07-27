@@ -20,7 +20,7 @@
 import unittest2
 import os
 
-from cmake.cmakelists import CMakeLists
+from pycmake.cmakelists import CMakeLists
 
 class TestCMakeLists(unittest2.TestCase):
     """

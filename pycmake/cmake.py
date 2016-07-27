@@ -17,9 +17,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with PyCMake.  If not, see <http://www.gnu.org/licenses/>.
 
-from cmake.project import Project
-from cmake.cmakelists import CMakeLists
-from cmake.compiler import Compiler
+from pycmake.project import Project
+from pycmake.cmakelists import CMakeLists
+from pycmake.compiler import Compiler
 
 
 class CMake(object):

@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with PyCMake.  If not, see <http://www.gnu.org/licenses/>.
 
-from cmake.supported import *
+from pycmake.supported import *
 
 class Compiler(object):
     """

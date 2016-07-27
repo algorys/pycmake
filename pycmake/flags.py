@@ -17,9 +17,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with PyCMake.  If not, see <http://www.gnu.org/licenses/>.
 
-from cmake.cmake import CMake
-from cmake.supported import CCompiler
-from cmake.supported import CXXCompiler
+from pycmake.cmake import CMake
+from pycmake.supported import CCompiler
+from pycmake.supported import CXXCompiler
 
 class Flags(object):
     """

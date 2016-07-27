@@ -31,6 +31,7 @@ class CMake(object):
         self.project = None
         self.compilers = {}
         self.cmakelist = None
+        self.flags = {}
 
     def add_project(self, name='project', language=''):
         if language == 'C' or language == 'CXX' or language == '':

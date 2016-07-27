@@ -20,6 +20,7 @@
 import unittest2
 
 from cmake.cmake import CMake
+from cmake.flags import Flags
 
 class TestCMake(unittest2.TestCase):
     """
@@ -50,6 +51,8 @@ class TestCMake(unittest2.TestCase):
 
         self.assertTrue(under_test.compilers.get('Clang++-Debian'))
         self.assertTrue(under_test.compilers.get('GCC-Debian'))
+
+
 
 
 

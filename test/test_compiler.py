@@ -29,21 +29,21 @@ class TestCompiler(unittest2.TestCase):
     def test_add_c_compiler(self):
         under_test = Compiler()
 
-        under_test.create_compiler('GCC-Debian', 'C', 'gcc', 5, '/usr/bin/gcc-5')
+        under_test.create_compiler('GCC-Debian', 'C', 'GCC', 5, '/usr/bin/gcc-5')
 
         self.assertEqual('GCC-Debian', under_test.name)
         self.assertEqual('C', under_test.language)
-        self.assertEqual('gcc', under_test.compiler)
+        self.assertEqual('GCC', under_test.compiler)
         self.assertEqual(5, under_test.version)
         self.assertEqual('/usr/bin/gcc-5', under_test.executable)
 
     def test_add_cpp_compiler(self):
         under_test = Compiler()
 
-        under_test.create_compiler('Clang++-Debian', 'CXX', 'clang++', 3.7, '/usr/bin/clang++-3.7')
+        under_test.create_compiler('Clang++-Debian', 'CXX', 'CLANGXX', 3.7, '/usr/bin/clang++-3.7')
 
         self.assertEqual('Clang++-Debian', under_test.name)
         self.assertEqual('CXX', under_test.language)
-        self.assertEqual('clang++', under_test.compiler)
+        self.assertEqual('CLANGXX', under_test.compiler)
         self.assertEqual(3.7, under_test.version)
         self.assertEqual('/usr/bin/clang++-3.7', under_test.executable)

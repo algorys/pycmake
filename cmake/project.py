@@ -18,10 +18,7 @@
 # along with PyCMake.  If not, see <http://www.gnu.org/licenses/>.
 
 from cmake.version import ProjectVersion
-from cmake.compiler import Compiler
-from cmake.flags import Flags
-from cmake.externals import Externals
-from cmake.variables import Variables
+
 
 class Project(object):
     """
@@ -32,7 +29,7 @@ class Project(object):
         """
 
         :param name: name of CMake Project. Default: 'project'
-        :param langage: type of langage.
+        :param language: type of langage.
         """
 
         self.settings = {

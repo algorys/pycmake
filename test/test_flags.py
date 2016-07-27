@@ -16,7 +16,8 @@
 import unittest2
 
 from cmake.flags import Flags
-from cmake.compiler import Compiler
+from cmake.cmake import CMake
+
 
 class TestFlags(unittest2.TestCase):
     """
@@ -24,13 +25,12 @@ class TestFlags(unittest2.TestCase):
     """
 
     def test_add_flags_to_compiler(self):
-        under_test = Flags()
-        compiler = Compiler()
-        compiler.create_compiler('Clang++-Debian', 'CXX', 'clang++', 3.7, '/usr/bin/clang++-3.7')
+        under_test = Flags('clang++3.7', 'std=c++11', 'Wall', '-GL')
+        cmake = CMake()
+        cmake.add_compiler('Clang++-Debian', 'CXX', 'clang++', 3.7, '/usr/bin/clang++-3.7')
 
-        under_test.add_flags_to_compiler(compiler, '/W4', '/MDd', '/GL')
+        self.assertEqual(False, under_test.use)
 
-        self.assertEqual('clang++', under_test.compiler)
-        self.assertEqual('/W4', under_test.general)
-        self.assertEqual('/MDd', under_test.debug)
-        self.assertEqual('/GL', under_test.release)
+        under_test.add_to_cmake_compilers('CLANG', cmake)
+
+        self.assertEqual(True, under_test.use)

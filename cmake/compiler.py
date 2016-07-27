@@ -21,7 +21,7 @@ from cmake.supported import *
 
 class Compiler(object):
     """
-        Compiler define a compiler.
+        Compilers define a compiler.
     """
 
     def __init__(self):

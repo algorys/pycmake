@@ -5,11 +5,11 @@ class Language(Enum):
     CXX = 'CXX'
 
 class CCompiler(Enum):
-    GCC = 'gcc'
-    CLANG = 'Clang'
+    GCC = 'GCC'
+    CLANG = 'CLANG'
     MSVC = 'MSVC'
 
 class CXXCompiler(Enum):
-    GXX = 'g++'
-    CLANGXX = 'Clang++'
+    GXX = 'GXX'
+    CLANGXX = 'CLANGXX'
     MSVC = 'MSVC'

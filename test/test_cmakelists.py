@@ -22,6 +22,9 @@ import os
 
 from pycmake.cmakelists import CMakeLists
 
+if not os.path.exists('./cmake'):
+    os.makedirs('./cmake')
+
 class TestCMakeLists(unittest2.TestCase):
     """
         this file tet CMakeLists class.
@@ -30,7 +33,7 @@ class TestCMakeLists(unittest2.TestCase):
     def test_cmakelist(self):
         under_test = CMakeLists()
 
-        under_test.create_file('./bin')
+        under_test.create_file('./cmake')
 
-        self.assertTrue(os.path.isfile('./bin/CMakeLists.txt'))
+        self.assertTrue(os.path.isfile('./cmake/CMakeLists.txt'))
         self.assertIsNotNone(under_test.cmakelists)

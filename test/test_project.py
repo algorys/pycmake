@@ -39,10 +39,10 @@ class TestProject(unittest2.TestCase):
         under_test = Project()
         under_test.create('My2Lib', '')
 
-        under_test.project_dir('./bin')
+        under_test.project_dir('./cmake')
 
         self.assertTrue(under_test.get_variable('MY2LIB_DIR'))
-        self.assertEqual('./bin', under_test.get_variable('MY2LIB_DIR')['value'])
+        self.assertEqual('./cmake', under_test.get_variable('MY2LIB_DIR')['value'])
 
     def test_outputs(self):
         under_test = Project()

@@ -8,7 +8,7 @@ __pycache__/
 .coverage
 
 # Test
-test/bin
+test/cmake
 
 # Setup
 *.egg

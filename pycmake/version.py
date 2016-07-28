@@ -17,6 +17,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with PyCMake.  If not, see <http://www.gnu.org/licenses/>.
 
+
 class Version(object):
     """
         ProjectVersion defines versions of project.
@@ -50,7 +51,7 @@ class Version(object):
         """
         :return: Return string version 'x.x.x.x'
         """
-        return str(self.major) + '.' +\
-               str(self.minor) + '.' +\
-               str(self.patch) + '.' +\
-               str(self.tweak)
+        return str(self.major) + '.' \
+            + str(self.minor) + '.' \
+            + str(self.patch) + '.' \
+            + str(self.tweak)

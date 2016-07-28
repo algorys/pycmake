@@ -112,4 +112,3 @@ class Project(object):
         """
 
         self.version = version
-

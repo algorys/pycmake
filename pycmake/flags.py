@@ -21,6 +21,7 @@ from pycmake.cmake import CMake
 from pycmake.supported import CCompiler
 from pycmake.supported import CXXCompiler
 
+
 class Flags(object):
     """
         Flags keep flags for compilations
@@ -49,7 +50,7 @@ class Flags(object):
         :param cmake: CMake object.
         """
         if compiler not in CCompiler.__members__ and compiler not in CXXCompiler.__members__:
-            raise ValueError('Compiler [' + compiler + '] does not exists.' )
+            raise ValueError('Compiler [' + compiler + '] does not exists.')
         else:
             if compiler == CCompiler.GCC or compiler == CXXCompiler.GXX:
                 cmake.flags['GNU'] = {
@@ -74,5 +75,3 @@ class Flags(object):
                 self.use = True
             else:
                 raise ValueError('Compiler [' + compiler.compiler + '] is not valid !')
-
-

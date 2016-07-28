@@ -61,7 +61,3 @@ class CMake(object):
         if not compiler.name or not compiler.compiler:
             raise ValueError('Your compiler must be created before.')
         self.compilers[compiler.name] = compiler
-
-
-
-

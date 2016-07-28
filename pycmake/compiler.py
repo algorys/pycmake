@@ -21,6 +21,7 @@ from pycmake.supported import Language
 from pycmake.supported import CCompiler
 from pycmake.supported import CXXCompiler
 
+
 class Compiler(object):
     """
         Compilers define a compiler.
@@ -70,10 +71,3 @@ class Compiler(object):
         self.version = version
         self.compiler = compiler
         self.executable = executable
-
-
-
-
-
-
-

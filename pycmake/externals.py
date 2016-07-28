@@ -25,13 +25,14 @@ class DependsType(Enum):
     PACKAGE = 2
     BINARYFILE = 3
 
+
 class Externals(object):
     """
         Externals contains all dependencies related to project.
     """
 
     def __init__(self):
-        self.dependencies={}
+        self.dependencies = {}
 
     def add_dependency(self, depends_type: DependsType, name, path='', ):
         """
@@ -47,4 +48,3 @@ class Externals(object):
             'name': name,
             'path': path,
         }
-

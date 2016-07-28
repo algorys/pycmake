@@ -29,7 +29,8 @@ class Project(object):
     """
 
     def __init__(self):
-        self.settings = {}
+        self.name = None
+        self.language = None
         self.version = None
         self.variables = Variables()
 
@@ -41,10 +42,8 @@ class Project(object):
         :param language: language of the project.
         """
 
-        self.settings = {
-            'name': name,
-            'language': language
-        }
+        self.name = name
+        self.language = language
         self.variables.add('PROJECT_NAME', name, option='filename_component')
 
     def set_project_dir(self, path):
@@ -56,15 +55,11 @@ class Project(object):
 
         if not os.path.exists(path):
             raise ValueError('This path does not exists : ' + path)
-        elif not self.settings:
+        elif not self.name:
             raise KeyError('Project has no name, you must create it before.')
         else:
-            var_name = self.settings['name'].upper() + '_DIR'
+            var_name = self.name.upper() + '_DIR'
             self.variables.add(var_name, path, option='set')
-
-    def add_settings(self, min_required='VERSION 3.0', policy='VERSION 3.0'):
-        self.settings['min_required'] = min_required
-        self.settings['policy'] = policy
 
     def add_version(self, version: Version):
         """

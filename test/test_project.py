@@ -31,8 +31,8 @@ class TestProject(unittest2.TestCase):
 
         under_test.create('MyProject', 'CXX')
 
-        self.assertEqual('MyProject', under_test.settings.get('name'))
-        self.assertEqual('CXX', under_test.settings.get('language'))
+        self.assertEqual('MyProject', under_test.name)
+        self.assertEqual('CXX', under_test.language)
         self.assertTrue(under_test.variables.values.get('PROJECT_NAME'))
 
     def test_set_project_dir(self):

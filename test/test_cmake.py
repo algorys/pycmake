@@ -20,12 +20,17 @@
 import unittest2
 
 from pycmake.cmake import CMake
-from pycmake.flags import Flags
+from pycmake.compiler import Compiler
 
 class TestCMake(unittest2.TestCase):
     """
         This file test PyCMake class
     """
+    clang_cxx = Compiler()
+    clang_cxx.create('Clang++-Debian', 'CXX', 'clang++', 3.7, '/usr/bin/clang++-3.7')
+
+    gcc = Compiler()
+    gcc.create('GCC-Debian', 'C', 'gcc', 5, '/usr/bin/gcc-5')
 
     def test_add_project(self):
         under_test = CMake()
@@ -33,21 +38,28 @@ class TestCMake(unittest2.TestCase):
         under_test.add_project('project', 'CXX')
 
         self.assertIsNotNone(under_test.project)
-        self.assertEqual('project', under_test.project.settings['name'])
-        self.assertEqual('CXX', under_test.project.settings['language'])
+        self.assertEqual('project', under_test.project.name)
+        self.assertEqual('CXX', under_test.project.language)
+
+    def test_add_settings(self):
+        under_test = CMake()
+
+        under_test.add_settings('VERSION 2.7', 'VERSION 2.7')
+        self.assertEqual('VERSION 2.7', under_test.settings.get('min_required'))
+        self.assertEqual('VERSION 2.7', under_test.settings.get('policy'))
 
     def test_add_compiler(self):
         under_test = CMake()
 
-        under_test.add_compiler('Clang++-Debian', 'CXX', 'clang++', 3.7, '/usr/bin/clang++-3.7')
+        under_test.add_compiler(TestCMake.clang_cxx)
 
         self.assertTrue(under_test.compilers.get('Clang++-Debian'))
 
     def test_add_multiple_compiler(self):
         under_test = CMake()
 
-        under_test.add_compiler('Clang++-Debian', 'CXX', 'clang++', 3.7, '/usr/bin/clang++-3.7')
-        under_test.add_compiler('GCC-Debian', 'C', 'gcc', 5, '/usr/bin/gcc-5')
+        under_test.add_compiler(TestCMake.clang_cxx)
+        under_test.add_compiler(TestCMake.gcc)
 
         self.assertTrue(under_test.compilers.get('Clang++-Debian'))
         self.assertTrue(under_test.compilers.get('GCC-Debian'))

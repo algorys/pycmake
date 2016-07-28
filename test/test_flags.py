@@ -17,6 +17,7 @@ import unittest2
 
 from pycmake.flags import Flags
 from pycmake.cmake import CMake
+from pycmake.compiler import Compiler
 
 
 class TestFlags(unittest2.TestCase):
@@ -27,7 +28,10 @@ class TestFlags(unittest2.TestCase):
     def test_add_flags_to_compiler(self):
         under_test = Flags('clang++3.7', 'std=c++11', 'Wall', '-GL')
         cmake = CMake()
-        cmake.add_compiler('Clang++-Debian', 'CXX', 'clang++', 3.7, '/usr/bin/clang++-3.7')
+        compiler = Compiler()
+        compiler.create('Clang++-Debian', 'CXX', 'clang++', 3.7, '/usr/bin/clang++-3.7')
+
+        cmake.add_compiler(compiler)
 
         self.assertEqual(False, under_test.use)
 

@@ -29,6 +29,7 @@ class CMake(object):
 
     def __init__(self):
         self.project = None
+        self.settings = {}
         self.compilers = {}
         self.cmakelist = None
         self.flags = {}
@@ -47,21 +48,19 @@ class CMake(object):
         else:
             raise ValueError('Language ' + language + ' is not currently supported !')
 
-    def add_compiler(self, name, language, compiler, version, executable):
-        """
-        Add a compiler to CMake object.
+    def add_settings(self, min_required='VERSION 3.0', policy='VERSION 3.0'):
+        self.settings['min_required'] = min_required
+        self.settings['policy'] = policy
 
-        :param name: name of compiler.
-        :param language: language of compiler
-        :param compiler: compiler (GCC, GXX, CLANG, CLANGXX, MSVC)
-        :param version: version of the compiler.
-        :param executable: full path to the executable.
+    def add_compiler(self, compiler: Compiler):
         """
-        # TODO see if just pass a Compiler is not more easy to use ?
+        Add a Compiler to CMake object.
 
-        new_compiler = Compiler()
-        new_compiler.create_compiler(name, language, compiler, version, executable)
-        self.compilers[name] = new_compiler
+        :param compiler: Compiler to add. Must be created before.
+        """
+        if not compiler.name or not compiler.compiler:
+            raise ValueError('Your compiler must be created before.')
+        self.compilers[compiler.name] = compiler
 
     def init_cmakelist(self):
         self.cmakelist = CMakeLists()

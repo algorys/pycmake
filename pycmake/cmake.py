@@ -31,7 +31,7 @@ class CMake(object):
         self.project = None
         self.settings = {}
         self.compilers = {}
-        self.cmakelist = None
+        self.cmakelist = CMakeLists()
         self.flags = {}
 
     def add_project(self, name='project', language=''):
@@ -62,8 +62,6 @@ class CMake(object):
             raise ValueError('Your compiler must be created before.')
         self.compilers[compiler.name] = compiler
 
-    def init_cmakelist(self):
-        self.cmakelist = CMakeLists()
 
 
 

@@ -33,7 +33,7 @@ class TestProject(unittest2.TestCase):
 
         self.assertEqual('MyProject', under_test.name)
         self.assertEqual('CXX', under_test.language)
-        self.assertTrue(under_test.variables.values.get('PROJECT_NAME'))
+        self.assertTrue(under_test.get_variable('PROJECT_NAME'))
 
     def test_set_project_dir(self):
         under_test = Project()
@@ -41,8 +41,8 @@ class TestProject(unittest2.TestCase):
 
         under_test.project_dir('./bin')
 
-        self.assertTrue(under_test.variables.values.get('MY2LIB_DIR'))
-        self.assertEqual('./bin', under_test.variables.values.get('MY2LIB_DIR')['value'])
+        self.assertTrue(under_test.get_variable('MY2LIB_DIR'))
+        self.assertEqual('./bin', under_test.get_variable('MY2LIB_DIR')['value'])
 
     def test_outputs(self):
         under_test = Project()
@@ -52,10 +52,10 @@ class TestProject(unittest2.TestCase):
         under_test.library_output_path('../../build/lib')
         under_test.archive_output_path('../../build/lib')
 
-        self.assertTrue(under_test.variables.values.get('EXECUTABLE_OUTPUT_PATH'))
-        self.assertEqual('../../build/bin', under_test.variables.values.get('EXECUTABLE_OUTPUT_PATH')['value'])
-        self.assertTrue(under_test.variables.values.get('LIBRARY_OUTPUT_PATH'))
-        self.assertEqual('../../build/lib', under_test.variables.values.get('LIBRARY_OUTPUT_PATH')['value'])
-        self.assertTrue(under_test.variables.values.get('ARCHIVE_OUTPUT_PATH'))
-        self.assertEqual('../../build/lib', under_test.variables.values.get('ARCHIVE_OUTPUT_PATH')['value'])
+        self.assertTrue(under_test.get_variable('EXECUTABLE_OUTPUT_PATH'))
+        self.assertEqual('../../build/bin', under_test.get_variable('EXECUTABLE_OUTPUT_PATH')['value'])
+        self.assertTrue(under_test.get_variable('LIBRARY_OUTPUT_PATH'))
+        self.assertEqual('../../build/lib', under_test.get_variable('LIBRARY_OUTPUT_PATH')['value'])
+        self.assertTrue(under_test.get_variable('ARCHIVE_OUTPUT_PATH'))
+        self.assertEqual('../../build/lib', under_test.get_variable('ARCHIVE_OUTPUT_PATH')['value'])
 

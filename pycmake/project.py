@@ -46,6 +46,12 @@ class Project(object):
         self.language = language
         self.variables.add('PROJECT_NAME', name, option='filename_component')
 
+    def get_variable(self, name):
+        try:
+            return self.variables.values[name]
+        except KeyError as e:
+            print('Variable [' + name + '] does not exist: ' + str(e))
+
     def project_dir(self, path):
         """
         Set the main dir of the project.

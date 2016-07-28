@@ -1,7 +1,7 @@
 language: python
 sudo: true
 python:
-    - "3.4"
+    - "3.2"
 
 install:
     - bash test/setup_test.sh

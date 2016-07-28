@@ -34,6 +34,13 @@ class CMake(object):
         self.flags = {}
 
     def add_project(self, name='project', language=''):
+        """
+        Add a project to CMake object.
+
+        :param name: name of the project
+        :param language: language. Default is ''
+        """
+
         if language == 'C' or language == 'CXX' or language == '':
             self.project = Project()
             self.project.create(name, language)
@@ -41,6 +48,17 @@ class CMake(object):
             raise ValueError('Language ' + language + ' is not currently supported !')
 
     def add_compiler(self, name, language, compiler, version, executable):
+        """
+        Add a compiler to CMake object.
+
+        :param name: name of compiler.
+        :param language: language of compiler
+        :param compiler: compiler (GCC, GXX, CLANG, CLANGXX, MSVC)
+        :param version: version of the compiler.
+        :param executable: full path to the executable.
+        """
+        # TODO see if just pass a Compiler is not more easy to use ?
+
         new_compiler = Compiler()
         new_compiler.create_compiler(name, language, compiler, version, executable)
         self.compilers[name] = new_compiler

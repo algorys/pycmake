@@ -26,6 +26,14 @@ class Variables(object):
         self.values = {}
 
     def add(self, name, value, option=''):
+        """
+        Add a variable.
+
+        :param name: Name of variable.
+        :param value: Value of variable.
+        :param option: Option: 'set' or 'filename_component'
+        """
+
         self.values[name] = {
             'name': name,
             'value': value,

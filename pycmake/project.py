@@ -19,7 +19,7 @@
 
 import os
 
-from pycmake.version import ProjectVersion
+from pycmake.version import Version
 from pycmake.variables import Variables
 
 
@@ -34,6 +34,13 @@ class Project(object):
         self.variables = Variables()
 
     def create(self, name, language=''):
+        """
+        Create a project.
+
+        :param name: name of the project.
+        :param language: language of the project.
+        """
+
         self.settings = {
             'name': name,
             'language': language
@@ -41,6 +48,12 @@ class Project(object):
         self.variables.add('PROJECT_NAME', name, option='filename_component')
 
     def set_project_dir(self, path):
+        """
+        Set the main dir of the project.
+
+        :param path: relative or absolute path from CMakeLists directory.
+        """
+
         if not os.path.exists(path):
             raise ValueError('This path does not exists : ' + path)
         elif not self.settings:
@@ -53,7 +66,13 @@ class Project(object):
         self.settings['min_required'] = min_required
         self.settings['policy'] = policy
 
-    def add_version(self, major=0, minor=0, patch=0, tweak=0):
-        version = ProjectVersion(major=major, minor=minor, patch=patch, tweak=tweak)
+    def add_version(self, version: Version):
+        """
+        Add a version to project.
+
+        :param version: version to add.
+        :type version: Version
+        """
+
         self.version = version
 

@@ -32,9 +32,14 @@ class Compiler(object):
         self.executable = None
 
     @staticmethod
-    def check_compiler_options(language, compiler, version):
-        if not isinstance(version, int) and not isinstance(version, float):
-            raise ValueError('Version must be an integer or a float !')
+    def check_compiler_options(language, compiler):
+        """
+        Check if compiler is valid.
+
+        :param language: language of compiler
+        :param compiler: compiler (GCC, GXX, CLANG, CLANGXX, MSVC)
+        """
+
         if language not in Language.__members__:
             raise ValueError('Language ' + language + ' is not currently supported !')
         if language is Language.C:
@@ -44,8 +49,20 @@ class Compiler(object):
             if compiler not in CXXCompiler.__members__:
                 raise ValueError('C++ compiler ' + compiler + ' is not currently supported !')
 
-    def create_compiler(self, name='gcc', language='', compiler='gcc', version=5, executable='/usr/bin/gcc-5'):
-        Compiler.check_compiler_options(language, compiler, version)
+    def create_compiler(self, name, language, compiler, version, executable):
+        """
+        Create a compiler.
+
+        :param name: name of compiler.
+        :param language: language of compiler
+        :param compiler: compiler (GCC, GXX, CLANG, CLANGXX, MSVC)
+        :param version: version of the compiler.
+        :param executable: full path to the executable.
+        """
+        if not isinstance(version, int) and not isinstance(version, float):
+            raise ValueError('Version must be an integer or a float !')
+
+        Compiler.check_compiler_options(language, compiler)
         self.name = name
         self.language = language
         self.version = version

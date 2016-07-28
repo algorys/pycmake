@@ -36,7 +36,7 @@ class Externals(object):
     def add_dependency(self, depends_type: DependsType, name, path='', ):
         """
 
-        :param depends_type: indicate type of external.
+        :param depends_type: indicate type of external. CMAKEPROJECT, PACKAGE or BINARYFILE
         :type depends_type: Enum.
         :param name: name of library.
         :param path: path of the library

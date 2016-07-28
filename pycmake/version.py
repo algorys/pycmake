@@ -17,18 +17,28 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with PyCMake.  If not, see <http://www.gnu.org/licenses/>.
 
-class ProjectVersion(object):
+class Version(object):
     """
         ProjectVersion defines versions of project.
     """
 
     def __init__(self, major=0, minor=0, patch=0, tweak=0):
+        """
+
+        :param major: Major digit.
+        :param minor: Minor digit.
+        :param patch: Patch digit.
+        :param tweak: Tweak digit.
+        """
         self.major = major
         self.minor = minor
         self.patch = patch
         self.tweak = tweak
 
     def get_version(self):
+        """
+        :return: dict of digits.
+        """
         return {
             'major': self.major,
             'minor': self.minor,
@@ -37,6 +47,9 @@ class ProjectVersion(object):
         }
 
     def get_string_version(self):
+        """
+        :return: Return string version 'x.x.x.x'
+        """
         return str(self.major) + '.' +\
                str(self.minor) + '.' +\
                str(self.patch) + '.' +\

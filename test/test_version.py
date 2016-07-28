@@ -19,7 +19,7 @@
 
 import unittest2
 
-from pycmake.version import ProjectVersion
+from pycmake.version import Version
 
 class TestVersion(unittest2.TestCase):
     """
@@ -27,7 +27,7 @@ class TestVersion(unittest2.TestCase):
     """
 
     def test_project_version(self):
-        under_test = ProjectVersion(0, 1, 1, 387)
+        under_test = Version(0, 1, 1, 387)
 
         self.assertEqual(0, under_test.major)
         self.assertEqual(1, under_test.minor)
@@ -35,11 +35,11 @@ class TestVersion(unittest2.TestCase):
         self.assertEqual(387, under_test.tweak)
 
     def test_get_version(self):
-        under_test = ProjectVersion(1, 2, 0, 485)
+        under_test = Version(1, 2, 0, 485)
 
         self.assertEqual({'major':1, 'minor':2, 'patch':0, 'tweak':485}, under_test.get_version())
 
     def test_string_version(self):
-        under_test = ProjectVersion(2, 0, 0, 12)
+        under_test = Version(2, 0, 0, 12)
 
         self.assertEqual('2.0.0.12', under_test.get_string_version())

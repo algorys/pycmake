@@ -27,6 +27,14 @@ class Flags(object):
     """
 
     def __init__(self, name, general, debug, release):
+        """
+        Compilation Flags.
+
+        :param name: name of flags
+        :param general: flags for all targets.
+        :param debug: flags for debug target
+        :param release: flags for release target.
+        """
         self.name = name
         self.general = general
         self.debug = debug
@@ -34,6 +42,12 @@ class Flags(object):
         self.use = False
 
     def add_to_cmake_compilers(self, compiler, cmake: CMake):
+        """
+        Add Flags to a compiler : [GCC,GXX], [CLANG,CLANGXX], [MSVC]
+
+        :param compiler: compiler name.
+        :param cmake: CMake object.
+        """
         if compiler not in CCompiler.__members__ and compiler not in CXXCompiler.__members__:
             raise ValueError('Compiler [' + compiler + '] does not exists.' )
         else:

@@ -28,6 +28,12 @@ class CMakeLists(object):
         self.cmakelists = None
 
     def create_file(self, path):
+        """
+        Create CMakeLists.txt
+
+        :param path: path where to create CMakeLists
+        """
+
         if not os.path.exists(path):
             raise ValueError('This path does not exists : ' + path)
         else:

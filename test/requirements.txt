@@ -1,0 +1,6 @@
+unittest2
+nose
+nose-cov
+coverage
+coveralls
+pep8

@@ -1,7 +1,7 @@
 language: python
 sudo: true
 python:
-    - "3.5"
+    - "3.4"
 
 install:
     - bash test/setup_test.sh
@@ -19,7 +19,8 @@ script:
     - nosetests -xv --nologcapture --with-coverage --cover-package=pycmake test/*.py
     - coverage combine
     - ls -la
-    - coverage report -m pycmake/*.py
+    - cat .coverage
+    - coverage report -m
 
 after_success:
     - coveralls -v

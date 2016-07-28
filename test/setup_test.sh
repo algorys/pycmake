@@ -28,12 +28,12 @@ echo ' --------- Update and Install packages ... --------- '
 sudo apt-get update
 
 echo '--------- Upgrade pip ... --------- '
-pip install --upgrade pip
+pip3 install --upgrade pip
 
 # Install prog AND tests requirements :
 #echo '--------- Installing application requirements ... --------- '
 #pip install -r requirements.txt
 echo '--------- Installing application in development mode ... --------- '
-pip install -e .
+pip3 install -e . --user
 echo '--------- Installing tests requirements ... --------- '
-pip install --upgrade -r test/requirements.txt
+pip3 install --upgrade -r test/requirements.txt --user

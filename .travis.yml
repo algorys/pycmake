@@ -16,12 +16,13 @@ script:
     # Coverage and tests
     - coverage erase
     - cd test/
-    - nosetests -xv --nologcapture --with-coverage --cover-package=pycmake test_*.py
+    - nosetests -xv --nologcapture --with-coverage --cover-package=pycmake test_cmake.py
     - coverage combine
     - ls -la
     - cat .coverage
-    - coverage report -m
+    # - coverage report -m
     - cp .coverage ../
+    - cd ..
 
 after_success:
     - coveralls -v

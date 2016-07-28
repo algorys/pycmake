@@ -2,10 +2,19 @@
 About PyCMake project
 =====================
 
+Build status
+============
+
+.. image:: https://travis-ci.org/algorys/pycmake.svg?branch=master
+    :target: https://travis-ci.org/algorys/pycmake
+
+.. image:: https://coveralls.io/repos/github/algorys/pycmake/badge.svg?branch=master&service=github
+    :target: https://coveralls.io/github/algorys/pycmake
+
 Introduction
 ============
 
-PyCMake will try to give to python users tools to create, configure and write a CMake projects.
+PyCMake is a Python3 module to create, manage and build CMake projects.
 
 Status
 ======

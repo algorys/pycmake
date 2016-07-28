@@ -15,7 +15,7 @@ script:
 
     # Coverage and tests
     - coverage erase
-    - cd test
+    - cd test/
     - nosetests -xv --nologcapture --with-coverage --cover-package=pycmake test_*.py
     - coverage combine
     - coverage report -m

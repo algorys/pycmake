@@ -46,20 +46,56 @@ class Project(object):
         self.language = language
         self.variables.add('PROJECT_NAME', name, option='filename_component')
 
-    def set_project_dir(self, path):
+    def project_dir(self, path):
         """
         Set the main dir of the project.
 
-        :param path: relative or absolute path from CMakeLists directory.
+        :param path: relative or absolute path from CMakeLists.txt.
         """
 
         if not os.path.exists(path):
             raise ValueError('This path does not exists : ' + path)
         elif not self.name:
-            raise KeyError('Project has no name, you must create it before.')
+            raise KeyError('Project was not been created, you must create it before.')
         else:
             var_name = self.name.upper() + '_DIR'
             self.variables.add(var_name, path, option='set')
+
+    def library_output_path(self, path):
+        """
+        Set Output Path for Shared Libraries.
+
+        :param path: relative or absolute path.
+        """
+
+        if not self.name:
+            raise KeyError('Project was not been created, you must create it before.')
+        else:
+            self.variables.add('LIBRARY_OUTPUT_PATH', path, option='set')
+
+    def archive_output_path(self, path):
+        """
+        Set Output Path for Static Libraries.
+
+        :param path: relative or absolute path.
+        """
+
+        if not self.name:
+            raise KeyError('Project was not been created, you must create it before.')
+        else:
+            self.variables.add('ARCHIVE_OUTPUT_PATH', path, option='set')
+
+    def executable_output_path(self, path):
+        """
+        Set Output Path for Executables.
+
+        :param path: relative or absolute path.
+        """
+
+        if not self.name:
+            raise KeyError('Project was not been created, you must create it before.')
+        else:
+            self.variables.add('EXECUTABLE_OUTPUT_PATH', path, option='set')
 
     def add_version(self, version: Version):
         """

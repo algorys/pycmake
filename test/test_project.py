@@ -39,8 +39,23 @@ class TestProject(unittest2.TestCase):
         under_test = Project()
         under_test.create('My2Lib', '')
 
-        under_test.set_project_dir('./bin')
+        under_test.project_dir('./bin')
 
         self.assertTrue(under_test.variables.values.get('MY2LIB_DIR'))
         self.assertEqual('./bin', under_test.variables.values.get('MY2LIB_DIR')['value'])
+
+    def test_outputs(self):
+        under_test = Project()
+        under_test.create('MyProject', 'CXX')
+
+        under_test.executable_output_path('../../build/bin')
+        under_test.library_output_path('../../build/lib')
+        under_test.archive_output_path('../../build/lib')
+
+        self.assertTrue(under_test.variables.values.get('EXECUTABLE_OUTPUT_PATH'))
+        self.assertEqual('../../build/bin', under_test.variables.values.get('EXECUTABLE_OUTPUT_PATH')['value'])
+        self.assertTrue(under_test.variables.values.get('LIBRARY_OUTPUT_PATH'))
+        self.assertEqual('../../build/lib', under_test.variables.values.get('LIBRARY_OUTPUT_PATH')['value'])
+        self.assertTrue(under_test.variables.values.get('ARCHIVE_OUTPUT_PATH'))
+        self.assertEqual('../../build/lib', under_test.variables.values.get('ARCHIVE_OUTPUT_PATH')['value'])
 

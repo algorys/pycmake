@@ -34,6 +34,6 @@ pip3 install --upgrade pip
 #echo '--------- Installing application requirements ... --------- '
 #pip install -r requirements.txt
 echo '--------- Installing application in development mode ... --------- '
-pip3 install -e . --user
+pip3 install -e .
 echo '--------- Installing tests requirements ... --------- '
-pip3 install --upgrade -r test/requirements.txt --user
+pip3 install --upgrade -r test/requirements.txt

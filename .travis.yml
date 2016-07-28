@@ -19,7 +19,7 @@ script:
     - nosetests -xv --nologcapture --with-coverage --cover-package=pycmake test/*.py
     - coverage combine
     - ls -la
-    - coverage report -m
+    - coverage report -m pycmake/*.py
 
 after_success:
     - coveralls -v

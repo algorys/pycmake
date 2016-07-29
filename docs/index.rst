@@ -13,11 +13,7 @@ Contents:
 
    intro
    install
-
-.. automodule:: pycmake
-
-.. autoclass:: CMake
-   :members
+   pycmake
 
 Indices and tables
 ==================

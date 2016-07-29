@@ -21,6 +21,7 @@ import unittest2
 
 from pycmake.compiler import Compiler
 
+
 class TestCompiler(unittest2.TestCase):
     """
     This file test Compiler class.

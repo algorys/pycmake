@@ -25,6 +25,7 @@ from pycmake.cmakelists import CMakeLists
 if not os.path.exists('./cmake'):
     os.makedirs('./cmake')
 
+
 class TestCMakeLists(unittest2.TestCase):
     """
         this file tet CMakeLists class.

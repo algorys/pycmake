@@ -22,10 +22,12 @@ import unittest2
 from pycmake.cmake import CMake
 from pycmake.compiler import Compiler
 
+
 class TestCMake(unittest2.TestCase):
     """
         This file test PyCMake class
     """
+
     clang_cxx = Compiler()
     clang_cxx.create('Clang++-Debian', 'CXX', 'clang++', 3.7, '/usr/bin/clang++-3.7')
 
@@ -63,8 +65,3 @@ class TestCMake(unittest2.TestCase):
 
         self.assertTrue(under_test.compilers.get('Clang++-Debian'))
         self.assertTrue(under_test.compilers.get('GCC-Debian'))
-
-
-
-
-

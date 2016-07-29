@@ -21,6 +21,7 @@ import unittest2
 
 from pycmake.externals import Externals, DependsType
 
+
 class TestExternals(unittest2.TestCase):
     """
         This file test Externals class.
@@ -34,7 +35,6 @@ class TestExternals(unittest2.TestCase):
         self.assertEqual(DependsType.PACKAGE, under_test.dependencies.get('zlib')['type'])
         self.assertEqual('zlib', under_test.dependencies.get('zlib')['name'])
         self.assertEqual('dependencies/zlib', under_test.dependencies.get('zlib')['path'])
-
 
     def test_multiple_externals(self):
         under_test = Externals()

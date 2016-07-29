@@ -21,6 +21,7 @@ import unittest2
 
 from pycmake.version import Version
 
+
 class TestVersion(unittest2.TestCase):
     """
         This file test Flags class.
@@ -37,7 +38,8 @@ class TestVersion(unittest2.TestCase):
     def test_get_version(self):
         under_test = Version(1, 2, 0, 485)
 
-        self.assertEqual({'major':1, 'minor':2, 'patch':0, 'tweak':485}, under_test.get_version())
+        self.assertEqual({'major': 1, 'minor': 2, 'patch': 0, 'tweak': 485},
+                         under_test.get_version())
 
     def test_string_version(self):
         under_test = Version(2, 0, 0, 12)

@@ -21,6 +21,7 @@ import unittest2
 
 from pycmake.project import Project
 
+
 class TestProject(unittest2.TestCase):
     """
         This file test Project class.
@@ -53,9 +54,47 @@ class TestProject(unittest2.TestCase):
         under_test.archive_output_path('../../build/lib')
 
         self.assertTrue(under_test.get_variable('EXECUTABLE_OUTPUT_PATH'))
-        self.assertEqual('../../build/bin', under_test.get_variable('EXECUTABLE_OUTPUT_PATH')['value'])
+        self.assertEqual('../../build/bin',
+                         under_test.get_variable('EXECUTABLE_OUTPUT_PATH')['value'])
         self.assertTrue(under_test.get_variable('LIBRARY_OUTPUT_PATH'))
-        self.assertEqual('../../build/lib', under_test.get_variable('LIBRARY_OUTPUT_PATH')['value'])
+        self.assertEqual('../../build/lib',
+                         under_test.get_variable('LIBRARY_OUTPUT_PATH')['value'])
         self.assertTrue(under_test.get_variable('ARCHIVE_OUTPUT_PATH'))
-        self.assertEqual('../../build/lib', under_test.get_variable('ARCHIVE_OUTPUT_PATH')['value'])
+        self.assertEqual('../../build/lib',
+                         under_test.get_variable('ARCHIVE_OUTPUT_PATH')['value'])
 
+    def test_add_sources(self):
+        under_test = Project()
+        under_test.create('MyProject', 'CXX')
+
+        under_test.add_sources('cpp', '../../main.cpp ../../graphics.cpp')
+        under_test.add_sources('headers', '../../graphics.h ../../stdafx.h')
+        under_test.add_sources('config', '/home/user/config/config.cpp', from_proj=False)
+
+        self.assertTrue(under_test.sources.get('cpp')['from_proj'])
+        self.assertEqual('../../main.cpp ../../graphics.cpp',
+                         under_test.sources.get('cpp')['sources'])
+        self.assertTrue(under_test.sources.get('headers')['from_proj'])
+        self.assertEqual('../../graphics.h ../../stdafx.h',
+                         under_test.sources.get('headers')['sources'])
+        self.assertFalse(under_test.sources.get('config')['from_proj'])
+
+    def test_add_sources_directory(self):
+        under_test = Project()
+        under_test.create('MyLib', 'CXX')
+
+        under_test.add_sources_directory('dir_cpp',
+                                         '../../lib/src',
+                                         '.cpp',
+                                         recursive=False)
+        under_test.add_sources_directory('dir_header',
+                                         '../../lib/src/includes',
+                                         '.h',
+                                         recursive=False)
+
+        self.assertEqual('../../lib/src', under_test.sources_dir.get('dir_cpp')['path'])
+        self.assertFalse(under_test.sources_dir.get('dir_cpp')['recursive'])
+        self.assertTrue(under_test.sources_dir.get('dir_cpp')['from_proj'])
+        self.assertEqual('../../lib/src/includes', under_test.sources_dir.get('dir_header')['path'])
+        self.assertFalse(under_test.sources_dir.get('dir_header')['recursive'])
+        self.assertEqual('.h', under_test.sources_dir.get('dir_header')['ext'])

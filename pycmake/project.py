@@ -33,6 +33,8 @@ class Project(object):
         self.language = None
         self.version = None
         self.variables = Variables()
+        self.sources_dir = {}
+        self.sources = {}
 
     def create(self, name, language=''):
         """
@@ -112,3 +114,36 @@ class Project(object):
         """
 
         self.version = version
+
+    def add_sources_directory(self, name, path, ext, recursive=True, from_proj=True):
+        """
+        Add sources directory to Project.
+
+        :param name: id of the sources.
+        :param path: path of sources.
+        :param ext: extension of sources directory contains.
+        :param recursive: resursive or not
+        :param from_proj: relative from Variable('PROJECT_DIR') or not.
+        """
+        if ext[:1] != '.':
+            raise ValueError('Your extension must begin with a [dot]')
+        self.sources_dir[name] = {
+            'path': path,
+            'ext': ext,
+            'recursive': recursive,
+            'from_proj': from_proj
+        }
+
+    def add_sources(self, name, sources, from_proj=True):
+        """
+        Add one or many sources files to Project.
+
+        :param name: id of the sources.
+        :param sources: source(s) name with or wothout her path(s)
+        :param from_proj: relative from Variable('PROJECT_DIR') or not.
+        """
+
+        self.sources[name] = {
+            'sources': sources,
+            'from_proj': from_proj
+        }

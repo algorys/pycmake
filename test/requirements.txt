@@ -1,6 +1,6 @@
 unittest2
 nose
 nose-cov
-coverage
+coverage <= 4.1
 coveralls
 pep8

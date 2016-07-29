@@ -15,10 +15,10 @@ script:
     - pep8 --max-line-length=100 --exclude='*.pyc, *.cfg, *.log' --ignore='E402' pycmake/*
 
     # Coverage and tests
-    - coverage3 erase
+    - coverage erase
     - cd test/
     - nosetests -xv --nologcapture --with-coverage --cover-package=pycmake test_*.py
-    - coverage3 combine
+    - coverage combine
     - ls -la
     - cat .coverage
     # - coverage report -m

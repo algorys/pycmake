@@ -16,7 +16,7 @@ script:
     # Coverage and tests
     - coverage3 erase
     - cd test/
-    - nosetests3 -xv --nologcapture --with-coverage --cover-package=pycmake test_cmake.py
+    - nosetests -xv --nologcapture --with-coverage --cover-package=pycmake test_cmake.py
     - coverage3 combine
     - ls -la
     - cat .coverage

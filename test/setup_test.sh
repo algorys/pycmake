@@ -26,7 +26,7 @@ cd $BASE_PATH
 
 echo ' --------- Update and Install packages ... --------- '
 sudo apt-get update
-sudo apt-get -qq install python3-nose python3-unittest2
+sudo apt-get -qq install python3-nose
 
 echo '--------- Upgrade pip ... --------- '
 pip3 install --upgrade pip

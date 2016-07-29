@@ -16,3 +16,4 @@ test/cmake
 build/
 dist/
 src/
+docs/_build/

@@ -34,7 +34,7 @@ class TestCompiler(unittest2.TestCase):
 
         self.assertEqual('GCC-Debian', under_test.name)
         self.assertEqual('C', under_test.language)
-        self.assertEqual('GCC', under_test.compiler)
+        self.assertEqual('GCC', under_test.compiler_id)
         self.assertEqual(5, under_test.version)
         self.assertEqual('/usr/bin/gcc-5', under_test.executable)
 
@@ -45,6 +45,6 @@ class TestCompiler(unittest2.TestCase):
 
         self.assertEqual('Clang++-Debian', under_test.name)
         self.assertEqual('CXX', under_test.language)
-        self.assertEqual('CLANGXX', under_test.compiler)
+        self.assertEqual('CLANGXX', under_test.compiler_id)
         self.assertEqual(3.7, under_test.version)
         self.assertEqual('/usr/bin/clang++-3.7', under_test.executable)

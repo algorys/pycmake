@@ -31,11 +31,11 @@ class Compiler(object):
         self.name = None
         self.version = None
         self.language = None
-        self.compiler = None
+        self.compiler_id = None
         self.executable = None
 
     @staticmethod
-    def check_compiler_options(language, compiler):
+    def check_compiler_options(language, compiler_id):
         """
         Check if compiler is valid.
 
@@ -46,28 +46,28 @@ class Compiler(object):
         if language not in Language.__members__:
             raise ValueError('Language ' + language + ' is not currently supported !')
         if language is Language.C:
-            if compiler not in CCompiler.__members__:
+            if compiler_id not in CCompiler.__members__:
                 raise ValueError('C compiler ' + compiler + ' is not currently supported !')
         if language is Language.CXX:
-            if compiler not in CXXCompiler.__members__:
+            if compiler_id not in CXXCompiler.__members__:
                 raise ValueError('C++ compiler ' + compiler + ' is not currently supported !')
 
-    def create(self, name, language, compiler, version, executable):
+    def create(self, name, language, compiler_id, version, executable):
         """
         Create a compiler.
 
         :param name: name of compiler.
         :param language: language of compiler
-        :param compiler: compiler (GCC, GXX, CLANG, CLANGXX, MSVC)
+        :param compiler_id: compiler (GCC, GXX, CLANG, CLANGXX, MSVC)
         :param version: version of the compiler.
         :param executable: full path to the executable.
         """
         if not isinstance(version, int) and not isinstance(version, float):
             raise ValueError('Version must be an integer or a float !')
 
-        Compiler.check_compiler_options(language, compiler)
+        Compiler.check_compiler_options(language, compiler_id)
         self.name = name
         self.language = language
         self.version = version
-        self.compiler = compiler
+        self.compiler_id = compiler_id
         self.executable = executable

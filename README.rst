@@ -5,10 +5,10 @@ About PyCMake project
 Build status
 ============
 
-.. image:: https://travis-ci.org/algorys/pycmake.svg?branch=master
+.. image:: https://travis-ci.org/algorys/pycmake.svg?branch=develop
     :target: https://travis-ci.org/algorys/pycmake
 
-.. image:: https://coveralls.io/repos/github/algorys/pycmake/badge.svg?branch=master&service=github
+.. image:: https://coveralls.io/repos/github/algorys/pycmake/badge.svg?branch=develop&service=github
     :target: https://coveralls.io/github/algorys/pycmake
 
 .. image:: https://readthedocs.org/projects/pycmake/badge/?version=latest

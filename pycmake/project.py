@@ -46,7 +46,7 @@ class Project(object):
 
         self.name = name
         self.language = language
-        self.variables.add('PROJECT_NAME', name, option='filename_component')
+        self.variables.add('PROJECT_NAME', name, option='set')
 
     def get_variable(self, name):
         try:

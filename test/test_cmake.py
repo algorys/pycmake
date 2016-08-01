@@ -29,10 +29,10 @@ class TestCMake(unittest2.TestCase):
     """
 
     clang_cxx = Compiler()
-    clang_cxx.create('Clang++-Debian', 'CXX', 'clang++', 3.7, '/usr/bin/clang++-3.7')
+    clang_cxx.create('Clang++-Debian', 'CXX', 'CLANG++', 3.7, '/usr/bin/clang++-3.7')
 
     gcc = Compiler()
-    gcc.create('GCC-Debian', 'C', 'gcc', 5, '/usr/bin/gcc-5')
+    gcc.create('GCC-Debian', 'C', 'GCC', 5, '/usr/bin/gcc-5')
 
     def test_add_project(self):
         under_test = CMake()
@@ -53,15 +53,20 @@ class TestCMake(unittest2.TestCase):
     def test_add_compiler(self):
         under_test = CMake()
 
-        under_test.add_compiler(TestCMake.clang_cxx)
+        self.assertFalse(under_test.clang)
 
-        self.assertTrue(under_test.compilers.get('Clang++-Debian'))
+        under_test.clang_compiler(TestCMake.clang_cxx)
+
+        self.assertTrue(under_test.clang)
 
     def test_add_multiple_compiler(self):
         under_test = CMake()
 
-        under_test.add_compiler(TestCMake.clang_cxx)
-        under_test.add_compiler(TestCMake.gcc)
+        self.assertFalse(under_test.clang)
+        self.assertFalse(under_test.gnu)
 
-        self.assertTrue(under_test.compilers.get('Clang++-Debian'))
-        self.assertTrue(under_test.compilers.get('GCC-Debian'))
+        under_test.clang_compiler(TestCMake.clang_cxx)
+        under_test.gnu_compiler(TestCMake.gcc)
+
+        self.assertTrue(under_test.clang)
+        self.assertTrue(under_test.gnu)

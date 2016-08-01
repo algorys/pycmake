@@ -29,9 +29,9 @@ class TestFlags(unittest2.TestCase):
         under_test = Flags('clang++3.7', 'std=c++11', 'Wall', '-GL')
         cmake = CMake()
         compiler = Compiler()
-        compiler.create('Clang++-Debian', 'CXX', 'clang++', 3.7, '/usr/bin/clang++-3.7')
+        compiler.create('Clang++-Debian', 'CXX', 'CLANG++', 3.7, '/usr/bin/clang++-3.7')
 
-        cmake.add_compiler(compiler)
+        cmake.clang_compiler(compiler)
 
         self.assertEqual(False, under_test.use)
 

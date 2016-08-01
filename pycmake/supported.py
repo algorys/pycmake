@@ -22,6 +22,6 @@ class CXXCompiler(Enum):
     """
     Supported C++ Compilers.
     """
-    GXX = 'GXX'
-    CLANGXX = 'CLANGXX'
+    GXX = 'G++'
+    CLANGXX = 'CLANG++'
     MSVC = 'MSVC'

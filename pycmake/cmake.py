@@ -30,7 +30,9 @@ class CMake(object):
     def __init__(self):
         self.project = None
         self.settings = {}
-        self.compilers = {}
+        self.clang = {}
+        self.gnu = {}
+        self.msvc = {}
         self.cmakelist = CMakeLists()
         self.flags = {}
 
@@ -52,12 +54,50 @@ class CMake(object):
         self.settings['min_required'] = min_required
         self.settings['policy'] = policy
 
-    def add_compiler(self, compiler: Compiler):
+    def clang_compiler(self, compiler: Compiler):
         """
-        Add a Compiler to CMake object.
+        Add a Clang Compiler to CMake object.
 
         :param compiler: Compiler to add. Must be created before.
         """
-        if not compiler.name or not compiler.compiler:
-            raise ValueError('Your compiler must be created before.')
-        self.compilers[compiler.name] = compiler
+        if compiler.compiler_id != 'CLANG' and compiler.compiler_id != 'CLANG++':
+            raise ValueError('Compiler [' + compiler.name + '] is not a valid Clang Compiler.')
+        else:
+            self.clang[compiler.compiler_id] = {
+                'name': compiler.name,
+                'language': compiler.language,
+                'version': compiler.version,
+                'bin': compiler.executable
+            }
+
+    def gnu_compiler(self, compiler: Compiler):
+        """
+        Add a GNU Compiler to CMake object.
+
+        :param compiler: Compiler to add. Must be created before.
+        """
+        if compiler.compiler_id != 'GCC' and compiler.compiler_id != 'G++':
+            raise ValueError('Compiler [' + compiler.name + '] is not a valid GNU Compiler.')
+        else:
+            self.gnu[compiler.compiler_id] = {
+                'name': compiler.name,
+                'language': compiler.language,
+                'version': compiler.version,
+                'bin': compiler.executable
+            }
+
+    def msvc_compiler(self, compiler: Compiler):
+        """
+        Add a MSVC Compiler to CMake object.
+
+        :param compiler: Compiler to add. Must be created before.
+        """
+        if compiler.compiler_id != 'MSVC' and compiler.compiler_id != 'MSVC':
+            raise ValueError('Compiler [' + compiler.name + '] is not a valid MSVC Compiler.')
+        else:
+            self.gnu[compiler.compiler_id] = {
+                'name': compiler.name,
+                'language': compiler.language,
+                'version': compiler.version,
+                'bin': compiler.executable
+            }

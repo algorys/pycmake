@@ -241,7 +241,7 @@ class CMakeLists(object):
                         'add_subdirectory(' + current_sub['source_dir'] + ' '
                         + current_sub['binary_dir'] + ')\n')
             if cmake.project.dependencies.add_link_directories:
-                link_directories = cmake.project.dependencies.add_link_directories
+                link_directories = cmake.project.dependencies.link_directories
                 for index, link in enumerate(link_directories):
                     self.cmakelists.write(
                         'link_directories(' + link + ')\n')

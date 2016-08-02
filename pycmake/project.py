@@ -19,7 +19,6 @@
 
 import os
 
-from pycmake.version import Version
 from pycmake.variables import Variables
 
 
@@ -143,15 +142,28 @@ class Project(object):
         else:
             self.variables.add('EXECUTABLE_OUTPUT_PATH', path, option='set')
 
-    def add_version(self, version):
-        """
-        Add a version to project.
-
-        :param version: version to add.
-        :type version: Version
+    def add_version(self, major, minor, patch, tweak=0):
         """
 
-        self.version = version
+        :param major:
+        :param minor:
+        :param patch:
+        :param tweak:
+        """
+        try:
+            isinstance(major, int)
+            isinstance(minor, int)
+            isinstance(patch, int)
+            isinstance(tweak, int)
+        except ValueError:
+            print('Version digits must be Integer !')
+
+        self.version = {
+            'major': major,
+            'minor': minor,
+            'patch': patch,
+            'tweak': tweak
+        }
 
     def add_source_directories(self, dirs_id, target, *sources, recursive=False, from_proj=False):
         """
@@ -165,13 +177,12 @@ class Project(object):
         """
 
         if target not in self.targets:
-            raise ValueError('Target: ' + target + ' does not exists. Create it before !')
+            raise ValueError('Target: ' + target + ' does not exist. Create it before !')
         self.sources_dir[dirs_id] = {
             'target': target,
             'sources': sources,
             'recursive': recursive,
             'from_proj': from_proj,
-
         }
 
     def add_source_files(self, files_id, target, *files, from_proj=False):

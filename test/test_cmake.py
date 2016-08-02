@@ -34,6 +34,9 @@ class TestCMake(unittest2.TestCase):
     gcc = Compiler()
     gcc.create('GCC-Debian', 'C', 'GCC', 5, '/usr/bin/gcc-5')
 
+    msvc = Compiler()
+    msvc.create('MSVC', 'CXX', 'MSVC++', 14, 'C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\bin\\amd64\\vcvars64.bat')
+
     def test_add_project(self):
         under_test = CMake()
 
@@ -50,7 +53,7 @@ class TestCMake(unittest2.TestCase):
         self.assertEqual('VERSION 2.7', under_test.settings.get('min_required'))
         self.assertEqual('VERSION 2.7', under_test.settings.get('policy'))
 
-    def test_add_compiler(self):
+    def test_add_clang_compiler(self):
         under_test = CMake()
 
         self.assertFalse(under_test.clang)
@@ -58,6 +61,15 @@ class TestCMake(unittest2.TestCase):
         under_test.clang_compiler(TestCMake.clang_cxx)
 
         self.assertTrue(under_test.clang)
+
+    def test_add_msvc_compiler(self):
+        under_test = CMake()
+
+        self.assertFalse(under_test.msvc)
+
+        under_test.msvc_compiler(TestCMake.msvc)
+
+        self.assertTrue(under_test.msvc)
 
     def test_add_multiple_compiler(self):
         under_test = CMake()

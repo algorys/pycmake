@@ -52,9 +52,9 @@ class CMakeLists(object):
             except PermissionError as e:
                 print('Maybe you do not have sufficient rights : ' + str(e))
 
-    def write_cmakelists(self, cmake):
+    def write_cmakelists(self, cmake):  # pragma: no cover
         """
-        Write cmakelists from CMake()
+        Write CMakeLists.txt from CMake()
 
         :param cmake: CMake object.
         :type: cmake: CMake()
@@ -240,8 +240,8 @@ class CMakeLists(object):
                     self.cmakelists.write(
                         'add_subdirectory(' + current_sub['source_dir'] + ' '
                         + current_sub['binary_dir'] + ')\n')
-            if cmake.project.dependencies.link_directories:
-                link_directories = cmake.project.dependencies.link_directories
+            if cmake.project.dependencies.add_link_directories:
+                link_directories = cmake.project.dependencies.add_link_directories
                 for index, link in enumerate(link_directories):
                     self.cmakelists.write(
                         'link_directories(' + link + ')\n')

@@ -96,10 +96,10 @@ class CMake(object):
 
         :param compiler: Compiler to add. Must be created before.
         """
-        if compiler.compiler_id != 'MSVC' and compiler.compiler_id != 'MSVC':
+        if compiler.compiler_id != 'MSVC' and compiler.compiler_id != 'MSVC++':
             raise ValueError('Compiler [' + compiler.name + '] is not a valid MSVC Compiler.')
         else:
-            self.gnu[compiler.compiler_id] = {
+            self.msvc[compiler.compiler_id] = {
                 'name': compiler.name,
                 'language': compiler.language,
                 'version': compiler.version,

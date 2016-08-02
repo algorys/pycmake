@@ -27,27 +27,18 @@ class TestExternals(unittest2.TestCase):
         This file test Externals class.
     """
 
-    def test_externals(self):
+    def test_add_subdirectory(self):
         under_test = Externals()
 
         under_test.add_subdirectory('zlib', '${PROJECT_DIR}/dependencies/zlib', '${PROJECT_DIR}/build/zlib')
 
-        self.assertTrue('zlib', under_test.sub_directories.get('zlib'))
+        self.assertTrue(under_test.sub_directories.get('zlib'))
         self.assertEqual('${PROJECT_DIR}/dependencies/zlib', under_test.sub_directories.get('zlib')['source_dir'])
         self.assertEqual('${PROJECT_DIR}/build/zlib', under_test.sub_directories.get('zlib')['binary_dir'])
 
-    # TODO Update tests for new Class
-    # def test_multiple_externals(self):
-    #     under_test = Externals()
-    #
-    #     under_test.add_subdirectory('graphics', '../../graphics')
-    #
-    #     self.assertEqual(DependsType.CMAKEPROJECT, under_test.sub_directories.get('graphics')['type'])
-    #     self.assertEqual('graphics', under_test.sub_directories.get('graphics')['name'])
-    #     self.assertEqual('../../graphics', under_test.sub_directories.get('graphics')['path'])
-    #
-    #     under_test.add_subdirectory(DependsType.BINARYFILE, 'core', 'dependencies/core')
-    #
-    #     self.assertEqual(DependsType.BINARYFILE, under_test.sub_directories.get('core')['type'])
-    #     self.assertEqual('core', under_test.sub_directories.get('core')['name'])
-    #     self.assertEqual('dependencies/core', under_test.sub_directories.get('core')['path'])
+    def test_add_link_directories(self):
+        under_test = Externals()
+
+        under_test.add_link_directories('${PROJECT_DIR}/build/g3log')
+
+        self.assertTrue('${PROJECT_DIR}/build/g3log' == under_test.link_directories[0])

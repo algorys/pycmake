@@ -20,6 +20,7 @@
 import unittest2
 
 from pycmake.project import Project
+from pycmake.externals import Externals
 
 
 class TestProject(unittest2.TestCase):
@@ -27,7 +28,7 @@ class TestProject(unittest2.TestCase):
         This file test Project class.
     """
 
-    def test_create_project(self):
+    def test_create(self):
         under_test = Project()
 
         under_test.create('MyProject', 'CXX')
@@ -36,7 +37,15 @@ class TestProject(unittest2.TestCase):
         self.assertEqual('CXX', under_test.language)
         self.assertTrue(under_test.get_variable('PROJECT_NAME'))
 
-    def test_set_project_dir(self):
+    def test_get_variable(self):
+        under_test = Project()
+
+        under_test.create('MyProject', 'CXX')
+
+        self.assertEqual({'name': 'PROJECT_NAME', 'value': 'MyProject', 'option': 'set'},
+                         under_test.get_variable('PROJECT_NAME'))
+
+    def test_project_dir(self):
         under_test = Project()
         under_test.create('My2Lib', '')
 
@@ -44,6 +53,27 @@ class TestProject(unittest2.TestCase):
 
         self.assertTrue(under_test.get_variable('MY2LIB_DIR'))
         self.assertEqual('./cmake', under_test.get_variable('MY2LIB_DIR')['value'])
+
+    def test_preprocessor_definition(self):
+        under_test = Project()
+        under_test.preprocessor_definitions('UNICODE', 'NDEBUG')
+
+        self.assertEqual('UNICODE', under_test.definitions[0])
+        self.assertEqual('NDEBUG', under_test.definitions[1])
+
+    def test_add_library_and_executable(self):
+        under_test = Project()
+
+        self.assertFalse(under_test.targets)
+
+        under_test.add_library('MyLib', shared=True)
+
+        self.assertTrue(under_test.targets)
+        self.assertEqual(True, under_test.targets.get('MyLib')['shared'])
+        self.assertEqual('library', under_test.targets.get('MyLib')['target_type'])
+
+        under_test.add_executable('MyExe')
+        self.assertEqual('executable', under_test.targets.get('MyExe')['target_type'])
 
     def test_outputs(self):
         under_test = Project()
@@ -107,3 +137,30 @@ class TestProject(unittest2.TestCase):
         self.assertEqual(('../../lib/src/includes/*.h', '../../lib/src/test/include/*.h'),
                          under_test.sources_dir.get('dir_header')['sources'])
         self.assertTrue(under_test.sources_dir.get('dir_header')['recursive'])
+
+    def test_add_version(self):
+        under_test = Project()
+        under_test.add_version(1, 2, 3)
+
+        self.assertEqual(1, under_test.version.get('major'))
+        self.assertEqual(2, under_test.version.get('minor'))
+        self.assertEqual(3, under_test.version.get('patch'))
+        self.assertEqual(0, under_test.version.get('tweak'))
+
+    def test_add_dependencies(self):
+        under_test = Project()
+
+        depends = Externals()
+        depends.add_subdirectory('zlib', '${PROJECT_DIR}/external/zlib', '${PROJECT_DIR}/build/zlib')
+        depends.add_subdirectory('g3log', '${PROJECT_DIR}/external/g3log', '${PROJECT_DIR}/build/g3log')
+
+        under_test.add_dependencies(depends)
+
+        self.assertEqual('${PROJECT_DIR}/external/zlib',
+                         under_test.dependencies.sub_directories.get('zlib')['source_dir'])
+        self.assertEqual('${PROJECT_DIR}/build/zlib',
+                         under_test.dependencies.sub_directories.get('zlib')['binary_dir'])
+        self.assertEqual('${PROJECT_DIR}/external/g3log',
+                         under_test.dependencies.sub_directories.get('g3log')['source_dir'])
+        self.assertEqual('${PROJECT_DIR}/build/g3log',
+                         under_test.dependencies.sub_directories.get('g3log')['binary_dir'])

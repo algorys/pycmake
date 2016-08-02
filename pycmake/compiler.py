@@ -35,7 +35,7 @@ class Compiler(object):
         self.executable = None
 
     @staticmethod
-    def check_compiler_options(language, compiler_id):
+    def check_compiler_options(language, compiler_id):  # pragma: no cover
         """
         Check if compiler is valid.
 

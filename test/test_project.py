@@ -104,14 +104,14 @@ class TestProject(unittest2.TestCase):
         under_test.add_source_files('config', 'myexe', '/home/user/config/config.cpp', from_proj=True)
 
         test_cpp = ('../../main.cpp', '../../graphics.cpp')
-        self.assertFalse(under_test.sources.get('cpp')['from_proj'])
+        self.assertFalse(under_test.sources_files.get('cpp')['from_proj'])
         self.assertEqual(test_cpp,
-                         under_test.sources.get('cpp')['files'])
+                         under_test.sources_files.get('cpp')['files'])
         test_header = ('../../graphics.h', '../../stdafx.h')
-        self.assertTrue(under_test.sources.get('headers')['from_proj'])
+        self.assertTrue(under_test.sources_files.get('headers')['from_proj'])
         self.assertEqual(test_header,
-                         under_test.sources.get('headers')['files'])
-        self.assertTrue(under_test.sources.get('config')['from_proj'])
+                         under_test.sources_files.get('headers')['files'])
+        self.assertTrue(under_test.sources_files.get('config')['from_proj'])
 
     def test_add_sources_directory(self):
         under_test = Project()
@@ -130,13 +130,13 @@ class TestProject(unittest2.TestCase):
                                           recursive=True)
 
         self.assertEqual(('../../lib/src/*.cpp', '../../lib/src/test/*.cpp'),
-                         under_test.sources_dir.get('dir_cpp')['sources'])
-        self.assertTrue(under_test.sources_dir.get('dir_cpp')['recursive'])
-        self.assertFalse(under_test.sources_dir.get('dir_cpp')['from_proj'])
+                         under_test.sources_dirs.get('dir_cpp')['sources'])
+        self.assertTrue(under_test.sources_dirs.get('dir_cpp')['recursive'])
+        self.assertFalse(under_test.sources_dirs.get('dir_cpp')['from_proj'])
 
         self.assertEqual(('../../lib/src/includes/*.h', '../../lib/src/test/include/*.h'),
-                         under_test.sources_dir.get('dir_header')['sources'])
-        self.assertTrue(under_test.sources_dir.get('dir_header')['recursive'])
+                         under_test.sources_dirs.get('dir_header')['sources'])
+        self.assertTrue(under_test.sources_dirs.get('dir_header')['recursive'])
 
     def test_add_version(self):
         under_test = Project()

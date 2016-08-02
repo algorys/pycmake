@@ -68,15 +68,6 @@ pycmake.variables module
     :undoc-members:
     :show-inheritance:
 
-pycmake.version module
-----------------------
-
-.. automodule:: pycmake.version
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
 Module contents
 ---------------
 

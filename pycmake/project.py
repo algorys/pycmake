@@ -33,8 +33,8 @@ class Project(object):
         self.version = None
         self.definitions = None
         self.variables = Variables()
-        self.sources_dir = {}
-        self.sources = {}
+        self.sources_dirs = {}
+        self.sources_files = {}
         self.dependencies = None
         self.targets = {}
 
@@ -178,7 +178,7 @@ class Project(object):
 
         if target not in self.targets:
             raise ValueError('Target: ' + target + ' does not exist. Create it before !')
-        self.sources_dir[dirs_id] = {
+        self.sources_dirs[dirs_id] = {
             'target': target,
             'sources': sources,
             'recursive': recursive,
@@ -195,7 +195,7 @@ class Project(object):
         :param from_proj: add ${PROJECT_DIR} to source files if True.
         """
 
-        self.sources[files_id] = {
+        self.sources_files[files_id] = {
             'target': target,
             'files': files,
             'from_proj': from_proj,

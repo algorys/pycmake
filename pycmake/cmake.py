@@ -58,11 +58,12 @@ class CMake(object):
         self.settings['min_required'] = min_required
         self.settings['policy'] = policy
 
-    def clang_compiler(self, compiler: Compiler):
+    def clang_compiler(self, compiler):
         """
         Add a Clang Compiler to CMake object.
 
-        :param compiler: Compiler to add. Must be created before.
+        :param compiler: Clang Compiler to add. Must be created before.
+        :type compiler: Compiler
         """
         if compiler.compiler_id != 'CLANG' and compiler.compiler_id != 'CLANG++':
             raise ValueError('Compiler [' + compiler.name + '] is not a valid Clang Compiler.')
@@ -74,11 +75,12 @@ class CMake(object):
                 'bin': compiler.executable
             }
 
-    def gnu_compiler(self, compiler: Compiler):
+    def gnu_compiler(self, compiler):
         """
         Add a GNU Compiler to CMake object.
 
-        :param compiler: Compiler to add. Must be created before.
+        :param compiler: Gnu Compiler to add. Must be created before.
+        :type compiler: Compiler
         """
         if compiler.compiler_id != 'GCC' and compiler.compiler_id != 'G++':
             raise ValueError('Compiler [' + compiler.compiler_id + '] is not a valid GNU Compiler.')
@@ -90,11 +92,12 @@ class CMake(object):
                 'bin': compiler.executable
             }
 
-    def msvc_compiler(self, compiler: Compiler):
+    def msvc_compiler(self, compiler):
         """
         Add a MSVC Compiler to CMake object.
 
-        :param compiler: Compiler to add. Must be created before.
+        :param compiler: MSVC Compiler to add. Must be created before.
+        :type compiler: Compiler
         """
         if compiler.compiler_id != 'MSVC' and compiler.compiler_id != 'MSVC++':
             raise ValueError('Compiler [' + compiler.name + '] is not a valid MSVC Compiler.')
@@ -106,12 +109,13 @@ class CMake(object):
                 'bin': compiler.executable
             }
 
-    def flags_to_compiler(self, compiler_id, flags: Flags):
+    def flags_to_compiler(self, compiler_id, flags):
         """
         Add Flags to a compiler : [GCC,G++], [CLANG,CLANG++], [MSVC,MSVC++]
 
         :param compiler_id: valid compiler id.
         :param flags: Flags to add.
+        :type flags: Flags
         """
         if compiler_id == CCompiler.GCC.value:
             self.gnu_flags['C'] = flags

@@ -57,7 +57,7 @@ class CMakeLists(object):
         Write CMakeLists.txt from CMake()
 
         :param cmake: CMake object.
-        :type: cmake: CMake()
+        :type: cmake: CMake
         """
         self.cmakelists.write(
             '# ------------------------- CMakeLists ------------------\n')
@@ -101,7 +101,7 @@ class CMakeLists(object):
         self.cmakelists.write(
             'project(${PROJECT_NAME} ' + cmake.project.language + ')\n')
 
-        # Compiler and flags
+        # GNU Flags
         if cmake.gnu_flags:
             self.cmakelists.write(
                 'if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")\n')
@@ -133,6 +133,7 @@ class CMakeLists(object):
                             '    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} '
                             + cmake.gnu_flags['C++'].release + '")\n')
                 self.cmakelists.write('endif()\n')
+        # CLANG Flags
         if cmake.clang_flags:
             self.cmakelists.write(
                 'if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")\n')
@@ -163,6 +164,7 @@ class CMakeLists(object):
                         '    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} '
                         + cmake.clang_flags['C++'].release + '")\n')
             self.cmakelists.write('endif()\n')
+        # MSVC Flags
         if cmake.msvc_flags:
             self.cmakelists.write(
                 'if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")\n')
@@ -202,29 +204,29 @@ class CMakeLists(object):
             self.cmakelists.write(')\n')
 
         # Files: Sources_Dir
-        if cmake.project.sources_dir:
-            for source_dir in cmake.project.sources_dir:
+        if cmake.project.sources_dirs:
+            for source_dir in cmake.project.sources_dirs:
                 self.cmakelists.write('file(')
-                if cmake.project.sources_dir.get(source_dir)['recursive']:
+                if cmake.project.sources_dirs.get(source_dir)['recursive']:
                     self.cmakelists.write('GLOB_RECURSE')
                 else:
                     self.cmakelists.write('GLOB')
                 self.cmakelists.write(' ' + source_dir.upper() + '\n')
-                sources_dir = cmake.project.sources_dir.get(source_dir)['sources']
+                sources_dir = cmake.project.sources_dirs.get(source_dir)['sources']
                 for index, source in enumerate(sources_dir):
-                    if cmake.project.sources_dir.get(source_dir)['from_proj']:
+                    if cmake.project.sources_dirs.get(source_dir)['from_proj']:
                         self.cmakelists.write(
                             '    ${PROJECT_DIR}/' + source + '\n')
                     else:
                         self.cmakelists.write('    ' + source + '\n')
                 self.cmakelists.write(')\n')
         # Files: Files
-        if cmake.project.sources:
-            for source_file in cmake.project.sources:
+        if cmake.project.sources_files:
+            for source_file in cmake.project.sources_files:
                 self.cmakelists.write('file(')
                 self.cmakelists.write(source_file.upper() + '\n')
-                for index, file in enumerate(cmake.project.sources.get(source_file)['files']):
-                    if cmake.project.sources.get(source_file)['from_proj']:
+                for index, file in enumerate(cmake.project.sources_files.get(source_file)['files']):
+                    if cmake.project.sources_files.get(source_file)['from_proj']:
                         self.cmakelists.write(
                             '    ${PROJECT_DIR}/' + file + '\n')
                     else:
@@ -262,15 +264,15 @@ class CMakeLists(object):
                     else:
                         self.cmakelists.write('STATIC\n')
 
-                if cmake.project.sources_dir:
-                    for source_dir in cmake.project.sources_dir:
-                        target_dir = cmake.project.sources_dir.get(source_dir)['target']
+                if cmake.project.sources_dirs:
+                    for source_dir in cmake.project.sources_dirs:
+                        target_dir = cmake.project.sources_dirs.get(source_dir)['target']
                         if target_dir == targets.get(target)['name']:
                             self.cmakelists.write(
                                 '    ' + source_dir.upper() + '\n')
-                if cmake.project.sources:
-                    for source_file in cmake.project.sources:
-                        target_files = cmake.project.sources.get(source_file)['target']
+                if cmake.project.sources_files:
+                    for source_file in cmake.project.sources_files:
+                        target_files = cmake.project.sources_files.get(source_file)['target']
                         if target_files == targets.get(target)['name']:
                             self.cmakelists.write(
                                 '    ' + source_file.upper() + '\n')

@@ -40,7 +40,7 @@ class Compiler(object):
         Check if compiler is valid.
 
         :param language: language of compiler
-        :param compiler_id: compiler_id (GCC, G++, CLANG, CLANG++, MSVC)
+        :param compiler_id: compiler_id (GCC, G++, CLANG, CLANG++, MSVC, MSVC++)
         """
 
         if language not in Language.__members__:

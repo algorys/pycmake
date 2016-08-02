@@ -99,9 +99,9 @@ class TestProject(unittest2.TestCase):
 
         under_test.add_executable('myexe')
 
-        under_test.add_source_files('cpp', 'myexe', '../../main.cpp', '../../graphics.cpp')
-        under_test.add_source_files('headers', 'myexe', '../../graphics.h', '../../stdafx.h', from_proj=True)
-        under_test.add_source_files('config', 'myexe', '/home/user/config/config.cpp', from_proj=True)
+        under_test.add_source_files('cpp', 'myexe', False, '../../main.cpp', '../../graphics.cpp')
+        under_test.add_source_files('headers', 'myexe', True, '../../graphics.h', '../../stdafx.h')
+        under_test.add_source_files('config', 'myexe', True, '/home/user/config/config.cpp')
 
         test_cpp = ('../../main.cpp', '../../graphics.cpp')
         self.assertFalse(under_test.sources_files.get('cpp')['from_proj'])
@@ -120,14 +120,18 @@ class TestProject(unittest2.TestCase):
 
         under_test.add_source_directories('dir_cpp',
                                          'mylib',
+                                          True,
+                                          False,
                                          '../../lib/src/*.cpp',
                                          '../../lib/src/test/*.cpp',
-                                          recursive=True)
+                                          )
         under_test.add_source_directories('dir_header',
                                          'mylib',
+                                          True,
+                                          False,
                                          '../../lib/src/includes/*.h',
                                          '../../lib/src/test/include/*.h',
-                                          recursive=True)
+                                          )
 
         self.assertEqual(('../../lib/src/*.cpp', '../../lib/src/test/*.cpp'),
                          under_test.sources_dirs.get('dir_cpp')['sources'])

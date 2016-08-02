@@ -165,14 +165,14 @@ class Project(object):
             'tweak': tweak
         }
 
-    def add_source_directories(self, dirs_id, target, *sources, recursive=False, from_proj=False):
+    def add_source_directories(self, dirs_id, target, recursive=False, from_proj=False, *sources):
         """
         Add one or many sources directories to Project.
 
         :param dirs_id: id of the directories.
         :param target: add directories to a specific target.
         :param sources: source directories to add.
-        :param recursive: resursive or not
+        :param recursive: recursive or not
         :param from_proj: append ${PROJECT_DIR} to source directories if True.
         """
 
@@ -185,7 +185,7 @@ class Project(object):
             'from_proj': from_proj,
         }
 
-    def add_source_files(self, files_id, target, *files, from_proj=False):
+    def add_source_files(self, files_id, target, from_proj=False, *files):
         """
         Add one or many sources files to Project.
 

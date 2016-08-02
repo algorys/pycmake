@@ -21,7 +21,8 @@ from pycmake.project import Project
 from pycmake.cmakelists import CMakeLists
 from pycmake.compiler import Compiler
 from pycmake.flags import Flags
-from pycmake.supported import *
+from pycmake.supported import CCompiler
+from pycmake.supported import CXXCompiler
 
 
 class CMake(object):
@@ -40,7 +41,7 @@ class CMake(object):
         self.clang_flags = {}
         self.msvc_flags = {}
 
-    def add_project(self, name='project', language=''):
+    def add_project(self, name, language):
         """
         Add a project to CMake object.
 
@@ -117,17 +118,17 @@ class CMake(object):
         :param flags: Flags to add.
         :type flags: Flags
         """
-        if compiler_id == CCompiler.GCC.value:
+        if compiler_id == CCompiler[0]:
             self.gnu_flags['C'] = flags
-        elif compiler_id == CXXCompiler.GXX.value:
+        elif compiler_id == CXXCompiler[0]:
             self.gnu_flags['C++'] = flags
-        elif compiler_id == CCompiler.CLANG.value:
+        elif compiler_id == CCompiler[1]:
             self.clang_flags['C'] = flags
-        elif compiler_id == CXXCompiler.CLANGXX.value:
+        elif compiler_id == CXXCompiler[1]:
             self.clang_flags['C++'] = flags
-        elif compiler_id == CCompiler.MSVC.value:
+        elif compiler_id == CCompiler[2]:
             self.msvc_flags['C'] = flags
-        elif compiler_id == CXXCompiler.MSVC.value:
+        elif compiler_id == CXXCompiler[2]:
             self.msvc_flags['C++'] = flags
         else:
             raise ValueError('Compiler [' + compiler_id + '] is not valid !')

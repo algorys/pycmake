@@ -20,6 +20,8 @@
 from pycmake.project import Project
 from pycmake.cmakelists import CMakeLists
 from pycmake.compiler import Compiler
+from pycmake.flags import Flags
+from pycmake.supported import *
 
 
 class CMake(object):
@@ -34,7 +36,9 @@ class CMake(object):
         self.gnu = {}
         self.msvc = {}
         self.cmakelist = CMakeLists()
-        self.flags = {}
+        self.gnu_flags = {}
+        self.clang_flags = {}
+        self.msvc_flags = {}
 
     def add_project(self, name='project', language=''):
         """
@@ -77,7 +81,7 @@ class CMake(object):
         :param compiler: Compiler to add. Must be created before.
         """
         if compiler.compiler_id != 'GCC' and compiler.compiler_id != 'G++':
-            raise ValueError('Compiler [' + compiler.name + '] is not a valid GNU Compiler.')
+            raise ValueError('Compiler [' + compiler.compiler_id + '] is not a valid GNU Compiler.')
         else:
             self.gnu[compiler.compiler_id] = {
                 'name': compiler.name,
@@ -101,3 +105,25 @@ class CMake(object):
                 'version': compiler.version,
                 'bin': compiler.executable
             }
+
+    def flags_to_compiler(self, compiler_id, flags: Flags):
+        """
+        Add Flags to a compiler : [GCC,G++], [CLANG,CLANG++], [MSVC,MSVC++]
+
+        :param compiler_id: valid compiler id.
+        :param flags: Flags to add.
+        """
+        if compiler_id == CCompiler.GCC.value:
+            self.gnu_flags['C'] = flags
+        elif compiler_id == CXXCompiler.GXX.value:
+            self.gnu_flags['C++'] = flags
+        elif compiler_id == CCompiler.CLANG.value:
+            self.clang_flags['C'] = flags
+        elif compiler_id == CXXCompiler.CLANGXX.value:
+            self.clang_flags['C++'] = flags
+        elif compiler_id == CCompiler.MSVC.value:
+            self.msvc_flags['C'] = flags
+        elif compiler_id == CXXCompiler.MSVC.value:
+            self.msvc_flags['C++'] = flags
+        else:
+            raise ValueError('Compiler [' + compiler_id + '] is not valid !')

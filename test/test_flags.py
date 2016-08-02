@@ -25,16 +25,26 @@ class TestFlags(unittest2.TestCase):
         This file test Flags class
     """
 
-    def test_add_flags_to_compiler(self):
+    cmake_test = CMake()
+    gcc = Compiler()
+    gcc.create('GCC-Debian', 'C', 'GCC', 5, '/usr/bin/gcc-5')
+
+    cmake_test.gnu_compiler(gcc)
+
+    def test_flags(self):
         under_test = Flags('clang++3.7', 'std=c++11', 'Wall', '-GL')
-        cmake = CMake()
-        compiler = Compiler()
-        compiler.create('Clang++-Debian', 'CXX', 'CLANG++', 3.7, '/usr/bin/clang++-3.7')
 
-        cmake.clang_compiler(compiler)
+        self.assertEqual('std=c++11', under_test.general)
+        self.assertEqual('Wall', under_test.debug)
+        self.assertEqual('-GL', under_test.release)
 
-        self.assertEqual(False, under_test.use)
+    def test_add_flags_to_compiler(self):
+        under_test = Flags('G++-5', 'std=c++11', 'Wall', '-GL')
 
-        under_test.add_to_cmake_compilers('CLANG', cmake)
+        TestFlags.cmake_test.flags_to_compiler('G++', under_test)
 
-        self.assertEqual(True, under_test.use)
+        self.assertTrue(TestFlags.cmake_test.gnu_flags)
+        self.assertTrue(TestFlags.cmake_test.gnu_flags['C++'])
+        self.assertEqual('std=c++11', TestFlags.cmake_test.gnu_flags.get('C++').general)
+        self.assertEqual('Wall', TestFlags.cmake_test.gnu_flags.get('C++').debug)
+        self.assertEqual('-GL', TestFlags.cmake_test.gnu_flags.get('C++').release)

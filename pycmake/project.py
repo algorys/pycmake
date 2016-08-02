@@ -32,9 +32,12 @@ class Project(object):
         self.name = None
         self.language = None
         self.version = None
+        self.definitions = None
         self.variables = Variables()
         self.sources_dir = {}
         self.sources = {}
+        self.dependencies = None
+        self.targets = {}
 
     def create(self, name, language=''):
         """
@@ -54,6 +57,15 @@ class Project(object):
         except KeyError as e:
             print('Variable [' + name + '] does not exist: ' + str(e))
 
+    def preprocessor_definitions(self, *definitions):
+        """
+        Add Preprocessor Definitions.
+
+        :param definitions: add preprocessor definitions to project: FOO BAR
+        """
+
+        self.definitions = definitions
+
     def project_dir(self, path):
         """
         Set the main dir of the project.
@@ -68,6 +80,32 @@ class Project(object):
         else:
             var_name = self.name.upper() + '_DIR'
             self.variables.add(var_name, path, option='set')
+
+    def add_library(self, name, shared=False):
+        """
+        Add a Library target.
+
+        :param name:
+        :param shared:
+        """
+
+        self.targets[name] = {
+            'name': name,
+            'shared': shared,
+            'target_type': 'library'
+        }
+
+    def add_executable(self, name):
+        """
+        Add an executable target.
+
+        :param name:
+        """
+
+        self.targets[name] = {
+            'name': name,
+            'target_type': 'executable'
+        }
 
     def library_output_path(self, path):
         """
@@ -105,7 +143,7 @@ class Project(object):
         else:
             self.variables.add('EXECUTABLE_OUTPUT_PATH', path, option='set')
 
-    def add_version(self, version: Version):
+    def add_version(self, version):
         """
         Add a version to project.
 
@@ -115,35 +153,42 @@ class Project(object):
 
         self.version = version
 
-    def add_sources_directory(self, name, path, ext, recursive=True, from_proj=True):
+    def add_source_directories(self, dirs_id, target, *sources, recursive=False, from_proj=False):
         """
-        Add sources directory to Project.
+        Add one or many sources directories to Project.
 
-        :param name: id of the sources.
-        :param path: path of sources.
-        :param ext: extension of sources directory contains.
+        :param dirs_id: id of the directories.
+        :param target: add directories to a specific target.
+        :param sources: source directories to add.
         :param recursive: resursive or not
-        :param from_proj: relative from Variable('PROJECT_DIR') or not.
+        :param from_proj: append ${PROJECT_DIR} to source directories if True.
         """
-        if ext[:1] != '.':
-            raise ValueError('Your extension must begin with a [dot]')
-        self.sources_dir[name] = {
-            'path': path,
-            'ext': ext,
+
+        if target not in self.targets:
+            raise ValueError('Target: ' + target + ' does not exists. Create it before !')
+        self.sources_dir[dirs_id] = {
+            'target': target,
+            'sources': sources,
             'recursive': recursive,
-            'from_proj': from_proj
+            'from_proj': from_proj,
+
         }
 
-    def add_sources(self, name, sources, from_proj=True):
+    def add_source_files(self, files_id, target, *files, from_proj=False):
         """
         Add one or many sources files to Project.
 
-        :param name: id of the sources.
-        :param sources: source(s) name with or wothout her path(s)
-        :param from_proj: relative from Variable('PROJECT_DIR') or not.
+        :param files_id: id of the files.
+        :param target: add files to a specific target.
+        :param files: files to add.
+        :param from_proj: add ${PROJECT_DIR} to source files if True.
         """
 
-        self.sources[name] = {
-            'sources': sources,
-            'from_proj': from_proj
+        self.sources[files_id] = {
+            'target': target,
+            'files': files,
+            'from_proj': from_proj,
         }
+
+    def add_dependencies(self, dependencies):
+        self.dependencies = dependencies

@@ -63,38 +63,47 @@ class TestProject(unittest2.TestCase):
         self.assertEqual('../../build/lib',
                          under_test.get_variable('ARCHIVE_OUTPUT_PATH')['value'])
 
-    def test_add_sources(self):
+    def test_add_files(self):
         under_test = Project()
         under_test.create('MyProject', 'CXX')
 
-        under_test.add_sources('cpp', '../../main.cpp ../../graphics.cpp')
-        under_test.add_sources('headers', '../../graphics.h ../../stdafx.h')
-        under_test.add_sources('config', '/home/user/config/config.cpp', from_proj=False)
+        under_test.add_executable('myexe')
 
-        self.assertTrue(under_test.sources.get('cpp')['from_proj'])
-        self.assertEqual('../../main.cpp ../../graphics.cpp',
-                         under_test.sources.get('cpp')['sources'])
+        under_test.add_source_files('cpp', 'myexe', '../../main.cpp', '../../graphics.cpp')
+        under_test.add_source_files('headers', 'myexe', '../../graphics.h', '../../stdafx.h', from_proj=True)
+        under_test.add_source_files('config', 'myexe', '/home/user/config/config.cpp', from_proj=True)
+
+        test_cpp = ('../../main.cpp', '../../graphics.cpp')
+        self.assertFalse(under_test.sources.get('cpp')['from_proj'])
+        self.assertEqual(test_cpp,
+                         under_test.sources.get('cpp')['files'])
+        test_header = ('../../graphics.h', '../../stdafx.h')
         self.assertTrue(under_test.sources.get('headers')['from_proj'])
-        self.assertEqual('../../graphics.h ../../stdafx.h',
-                         under_test.sources.get('headers')['sources'])
-        self.assertFalse(under_test.sources.get('config')['from_proj'])
+        self.assertEqual(test_header,
+                         under_test.sources.get('headers')['files'])
+        self.assertTrue(under_test.sources.get('config')['from_proj'])
 
     def test_add_sources_directory(self):
         under_test = Project()
         under_test.create('MyLib', 'CXX')
+        under_test.add_library('mylib', shared=True)
 
-        under_test.add_sources_directory('dir_cpp',
-                                         '../../lib/src',
-                                         '.cpp',
-                                         recursive=False)
-        under_test.add_sources_directory('dir_header',
-                                         '../../lib/src/includes',
-                                         '.h',
-                                         recursive=False)
+        under_test.add_source_directories('dir_cpp',
+                                         'mylib',
+                                         '../../lib/src/*.cpp',
+                                         '../../lib/src/test/*.cpp',
+                                          recursive=True)
+        under_test.add_source_directories('dir_header',
+                                         'mylib',
+                                         '../../lib/src/includes/*.h',
+                                         '../../lib/src/test/include/*.h',
+                                          recursive=True)
 
-        self.assertEqual('../../lib/src', under_test.sources_dir.get('dir_cpp')['path'])
-        self.assertFalse(under_test.sources_dir.get('dir_cpp')['recursive'])
-        self.assertTrue(under_test.sources_dir.get('dir_cpp')['from_proj'])
-        self.assertEqual('../../lib/src/includes', under_test.sources_dir.get('dir_header')['path'])
-        self.assertFalse(under_test.sources_dir.get('dir_header')['recursive'])
-        self.assertEqual('.h', under_test.sources_dir.get('dir_header')['ext'])
+        self.assertEqual(('../../lib/src/*.cpp', '../../lib/src/test/*.cpp'),
+                         under_test.sources_dir.get('dir_cpp')['sources'])
+        self.assertTrue(under_test.sources_dir.get('dir_cpp')['recursive'])
+        self.assertFalse(under_test.sources_dir.get('dir_cpp')['from_proj'])
+
+        self.assertEqual(('../../lib/src/includes/*.h', '../../lib/src/test/include/*.h'),
+                         under_test.sources_dir.get('dir_header')['sources'])
+        self.assertTrue(under_test.sources_dir.get('dir_header')['recursive'])

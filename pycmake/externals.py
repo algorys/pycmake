@@ -17,14 +17,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with PyCMake.  If not, see <http://www.gnu.org/licenses/>.
 
-from enum import Enum
-
-
-class DependsType(Enum):
-    CMAKEPROJECT = 1
-    PACKAGE = 2
-    BINARYFILE = 3
-
 
 class Externals(object):
     """
@@ -32,19 +24,28 @@ class Externals(object):
     """
 
     def __init__(self):
-        self.dependencies = {}
+        self.sub_directories = {}
+        self.link_directories = None
 
-    def add_dependency(self, depends_type: DependsType, name, path='', ):
+    def add_subdirectory(self, subdir_id, source_dir, binary_dir):
+        """
+        Add a subdirectory to the build.
+
+        :param subdir_id: id of the subdir.
+        :param source_dir: directory in which the source CMakeLists.txt is located
+        :param binary_dir: directory in which to place the output files.
         """
 
-        :param depends_type: indicate type of external. CMAKEPROJECT, PACKAGE or BINARYFILE
-        :type depends_type: Enum.
-        :param name: name of library.
-        :param path: path of the library
-        """
-
-        self.dependencies[name] = {
-            'type': depends_type,
-            'name': name,
-            'path': path,
+        self.sub_directories[subdir_id] = {
+            'source_dir': source_dir,
+            'binary_dir': binary_dir,
         }
+
+    def add_link_directories(self, *directories):
+        """
+        Link with the specified directories.
+
+        :param directories: directories in which the linker will look for libraries.
+        """
+
+        self.link_directories = directories

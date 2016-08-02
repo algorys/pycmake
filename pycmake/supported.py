@@ -24,4 +24,4 @@ class CXXCompiler(Enum):
     """
     GXX = 'G++'
     CLANGXX = 'CLANG++'
-    MSVC = 'MSVC'
+    MSVC = 'MSVC++'

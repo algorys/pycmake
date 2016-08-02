@@ -17,17 +17,13 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with PyCMake.  If not, see <http://www.gnu.org/licenses/>.
 
-from pycmake.cmake import CMake
-from pycmake.supported import CCompiler
-from pycmake.supported import CXXCompiler
-
 
 class Flags(object):
     """
         Flags keep flags for compilations
     """
 
-    def __init__(self, name, general, debug, release):
+    def __init__(self, name, general, debug='', release=''):
         """
         Compilation Flags.
 
@@ -40,38 +36,3 @@ class Flags(object):
         self.general = general
         self.debug = debug
         self.release = release
-        self.use = False
-
-    def add_to_cmake_compilers(self, compiler, cmake: CMake):
-        """
-        Add Flags to a compiler : [GCC,GXX], [CLANG,CLANGXX], [MSVC]
-
-        :param compiler: compiler name.
-        :param cmake: CMake object.
-        """
-        if compiler not in CCompiler.__members__ and compiler not in CXXCompiler.__members__:
-            raise ValueError('Compiler [' + compiler + '] does not exists.')
-        else:
-            if compiler == CCompiler.GCC or compiler == CXXCompiler.GXX:
-                cmake.flags['GNU'] = {
-                    'general': self.general,
-                    'debug': self.debug,
-                    'release': self.release
-                }
-                self.use = True
-            elif compiler == CCompiler.CLANG.value or compiler == CXXCompiler.CLANGXX.value:
-                cmake.flags['CLANG'] = {
-                    'general': self.general,
-                    'debug': self.debug,
-                    'release': self.release
-                }
-                self.use = True
-            elif compiler == CCompiler.MSVC.value or compiler == CXXCompiler.MSVC.value:
-                cmake.flags['MSVC'] = {
-                    'general': self.general,
-                    'debug': self.debug,
-                    'release': self.release
-                }
-                self.use = True
-            else:
-                raise ValueError('Compiler [' + compiler.compiler + '] is not valid !')

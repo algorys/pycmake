@@ -40,17 +40,17 @@ class Compiler(object):
         Check if compiler is valid.
 
         :param language: language of compiler
-        :param compiler: compiler (GCC, GXX, CLANG, CLANGXX, MSVC)
+        :param compiler_id: compiler_id (GCC, G++, CLANG, CLANG++, MSVC)
         """
 
         if language not in Language.__members__:
             raise ValueError('Language ' + language + ' is not currently supported !')
         if language is Language.C:
             if compiler_id not in CCompiler.__members__:
-                raise ValueError('C compiler ' + compiler + ' is not currently supported !')
+                raise ValueError('C compiler ' + compiler_id + ' is not currently supported !')
         if language is Language.CXX:
             if compiler_id not in CXXCompiler.__members__:
-                raise ValueError('C++ compiler ' + compiler + ' is not currently supported !')
+                raise ValueError('C++ compiler ' + compiler_id + ' is not currently supported !')
 
     def create(self, name, language, compiler_id, version, executable):
         """

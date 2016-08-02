@@ -17,7 +17,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with PyCMake.  If not, see <http://www.gnu.org/licenses/>.
 
+"""
+    This file is only to tell what's compatible or not with pycmake.
+"""
 
-Language = ('C','CXX')
-CCompiler = ('GCC','CLANG','MSVC')
-CXXCompiler= ('G++', 'CLANG++', 'MSVC++')
+Language = ('C', 'CXX')
+CCompiler = ('GCC', 'CLANG', 'MSVC')
+CXXCompiler = ('G++', 'CLANG++', 'MSVC++')

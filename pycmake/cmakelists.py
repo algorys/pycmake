@@ -119,20 +119,20 @@ class CMakeLists(object):
                         self.cmakelists.write(
                             '  set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} '
                             + cmake.gnu_flags['C'].release + '")\n')
-                if 'C++' in cmake.gnu_flags:
-                    if cmake.gnu_flags['C++'].general:
-                        self.cmakelists.write(
-                            '    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} '
-                            + cmake.gnu_flags['C++'].general + '")\n')
-                    if cmake.gnu_flags['C++'].debug:
-                        self.cmakelists.write(
-                            '    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} '
-                            + cmake.gnu_flags['C++'].debug + '")\n')
-                    if cmake.gnu_flags['C++'].release:
-                        self.cmakelists.write(
-                            '    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} '
-                            + cmake.gnu_flags['C++'].release + '")\n')
-                self.cmakelists.write('endif()\n')
+            if 'C++' in cmake.gnu_flags:
+                if cmake.gnu_flags['C++'].general:
+                    self.cmakelists.write(
+                        '    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} '
+                        + cmake.gnu_flags['C++'].general + '")\n')
+                if cmake.gnu_flags['C++'].debug:
+                    self.cmakelists.write(
+                        '    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} '
+                        + cmake.gnu_flags['C++'].debug + '")\n')
+                if cmake.gnu_flags['C++'].release:
+                    self.cmakelists.write(
+                        '    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} '
+                        + cmake.gnu_flags['C++'].release + '")\n')
+            self.cmakelists.write('endif()\n')
         # CLANG Flags
         if cmake.clang_flags:
             self.cmakelists.write(

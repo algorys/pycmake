@@ -12,7 +12,7 @@ script:
     - pip3 freeze
 
     # Code static analysis
-    - pep8 --max-line-length=100 --exclude='*.pyc, *.cfg, *.log' --ignore='E402' pycmake/*
+    - pep8 --max-line-length=100 --exclude='*.pyc, *.cfg, *.log' --ignore='E402,W503' pycmake/*
 
     # Coverage and tests
     - coverage erase

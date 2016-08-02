@@ -5,14 +5,30 @@ About PyCMake project
 Build status
 ============
 
+Master
+------
+
+.. image:: https://travis-ci.org/algorys/pycmake.svg?branch=master
+    :target: https://travis-ci.org/algorys/pycmake
+
+.. image:: https://coveralls.io/repos/github/algorys/pycmake/badge.svg?branch=master&service=github
+    :target: https://coveralls.io/github/algorys/pycmake
+
+.. image:: https://readthedocs.org/projects/pycmake/badge/?version=latest
+    :target: http://pycmake.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
+
+Development
+-----------
+
 .. image:: https://travis-ci.org/algorys/pycmake.svg?branch=develop
     :target: https://travis-ci.org/algorys/pycmake
 
 .. image:: https://coveralls.io/repos/github/algorys/pycmake/badge.svg?branch=develop&service=github
     :target: https://coveralls.io/github/algorys/pycmake
 
-.. image:: https://readthedocs.org/projects/pycmake/badge/?version=latest
-    :target: http://pycmake.readthedocs.io/en/latest/?badge=latest
+.. image:: https://readthedocs.org/projects/pycmake/badge/?version=develop
+    :target: http://pycmake.readthedocs.io/en/latest/?badge=develop
     :alt: Documentation Status
 
 Introduction

@@ -20,19 +20,31 @@
 
 class Flags(object):
     """
-        Flags keep flags for compilations
+        Flags for general, debug and release compilations
     """
 
-    def __init__(self, name, general, debug='', release=''):
+    def __init__(self, flags_id, general, debug='', release=''):
         """
         Compilation Flags.
-
-        :param name: name of flags
-        :param general: flags for all targets.
-        :param debug: flags for debug target
-        :param release: flags for release target.
         """
-        self.name = name
+
+        self.flags_id = flags_id
+        """
+        :param flags_id: id of flags
+        :type flags_id: str
+        """
         self.general = general
+        """
+        :param general: flags for all targets.
+        :type general: str
+        """
         self.debug = debug
+        """
+        :param debug: flags for debug target
+        :type debug: str
+        """
         self.release = release
+        """
+        :param release: flags for release target.
+        :type release: str
+        """

@@ -37,10 +37,12 @@ class Compiler(object):
     @staticmethod
     def check_compiler_options(language, compiler_id):  # pragma: no cover
         """
-        Check if compiler is valid.
+        Check if compiler is valid. Used for each :func:`~create`.
 
-        :param language: language of compiler
-        :param compiler_id: compiler_id (GCC, G++, CLANG, CLANG++, MSVC, MSVC++)
+        :param language: language of compiler (C or CXX)
+        :type language: str
+        :param compiler_id: compiler_id (GCC, G++, CLANG, CLANG++, MSVC or MSVC++)
+        :type compiler_id: str
         """
 
         if language not in Language:
@@ -57,11 +59,17 @@ class Compiler(object):
         Create a compiler.
 
         :param name: name of compiler.
+        :type name: str
         :param language: language of compiler
+        :type language: str
         :param compiler_id: compiler (GCC, GXX, CLANG, CLANGXX, MSVC)
+        :type compiler_id: str
         :param version: version of the compiler.
+        :type version: int or float
         :param executable: full path to the executable.
+        :type executable: str
         """
+
         if not isinstance(version, int) and not isinstance(version, float):
             raise ValueError('Version must be an integer or a float !')
 

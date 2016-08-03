@@ -29,11 +29,14 @@ class Externals(object):
 
     def add_subdirectory(self, subdir_id, source_dir, binary_dir):
         """
-        Add a subdirectory to the build.
+        Add one subdirectory to the build.
 
         :param subdir_id: id of the subdir.
+        :type subdir_id: str
         :param source_dir: directory in which the source CMakeLists.txt is located
+        :type source_dir: str
         :param binary_dir: directory in which to place the output files.
+        :type binary_dir: str
         """
 
         self.sub_directories[subdir_id] = {
@@ -46,6 +49,7 @@ class Externals(object):
         Link with the specified directories.
 
         :param directories: directories in which the linker will look for libraries.
+        :type directories: tuple
         """
 
         self.link_directories = directories

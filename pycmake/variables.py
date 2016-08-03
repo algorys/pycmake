@@ -30,9 +30,12 @@ class Variables(object):
         """
         Add a variable.
 
-        :param name: Name of variable.
+        :param name: Name of the variable.
+        :type name: str
         :param value: Value of variable.
+        :type value: str
         :param option: Option: 'set' or 'filename_component'
+        :type option: str
         """
 
         self.values[name] = {

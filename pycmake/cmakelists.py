@@ -18,12 +18,13 @@
 # along with PyCMake.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
+import sys
 
 
 class CMakeLists(object):
 
     """
-        CMakeLists create, write CMakeLists.txt
+        CMakeLists create and generate CMakeLists.txt.
     """
 
     def __init__(self):
@@ -33,16 +34,32 @@ class CMakeLists(object):
         """
         Create CMakeLists.txt
 
-        :param path: path where to create CMakeLists
+        :param path: path where to create CMakeLists.txt.
+        :type path: str
         """
 
         if not os.path.exists(path):
-            raise ValueError('This path does not exists : ' + path)
-        else:
+            try:
+                os.makedirs(path)
+            except PermissionError as e:
+                sys.exit('Cannot create : ' + path + '. ' + str(e))
+
+        try:
             if path[-1:] == '/' or path[-1:] == '\\':
                 self.cmakelists = open(str(path) + 'CMakeLists.txt', 'w')
             else:
                 self.cmakelists = open(str(path) + '/CMakeLists.txt', 'w')
+        except PermissionError as e:
+            sys.exit('Maybe you do not have sufficient rights : ' + str(e))
+
+    def write_cmakelists(self, cmake):  # pragma: no cover
+        """
+        Write CMakeLists.txt from the CMake data.
+
+        :param cmake: CMake object, who contains a Project, Compilers and Targets.
+        :type cmake: CMake
+        """
+
         if self.cmakelists:
             try:
                 self.cmakelists.write(
@@ -52,13 +69,6 @@ class CMakeLists(object):
             except PermissionError as e:
                 print('Maybe you do not have sufficient rights : ' + str(e))
 
-    def write_cmakelists(self, cmake):  # pragma: no cover
-        """
-        Write CMakeLists.txt from CMake()
-
-        :param cmake: CMake object.
-        :type: cmake: CMake
-        """
         self.cmakelists.write(
             '# ------------------------- CMakeLists ------------------\n')
 

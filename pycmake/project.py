@@ -43,7 +43,9 @@ class Project(object):
         Create a project.
 
         :param name: name of the project.
+        :type name: str
         :param language: language of the project.
+        :type language: str
         """
 
         self.name = name
@@ -51,6 +53,16 @@ class Project(object):
         self.variables.add('PROJECT_NAME', name, option='set')
 
     def get_variable(self, name):
+        """
+        Returns the contents of the specified **variable**.
+        Will look into :class:`~pycmake.variables.Variables`
+
+        :param name: the name of the desired variable.
+        :type name: str
+        :return: a variable of the project.
+        :rtype: dict
+        """
+
         try:
             return self.variables.values[name]
         except KeyError as e:
@@ -61,15 +73,18 @@ class Project(object):
         Add Preprocessor Definitions.
 
         :param definitions: add preprocessor definitions to project: FOO BAR
+        :type definitions: tuple
         """
 
         self.definitions = definitions
 
     def project_dir(self, path):
         """
-        Set the main dir of the project.
+        Defines the main project directory in a variable named: PROJECTNAME + **_DIR**.\n
+        So if project name is called "Core", variable will be named: "CORE_DIR"
 
         :param path: relative or absolute path from CMakeLists.txt.
+        :type path: str
         """
 
         if not os.path.exists(path):
@@ -84,8 +99,10 @@ class Project(object):
         """
         Add a Library target.
 
-        :param name:
-        :param shared:
+        :param name: the library name.
+        :type name: str
+        :param shared: shared library or not.
+        :type shared: bool
         """
 
         self.targets[name] = {
@@ -98,7 +115,8 @@ class Project(object):
         """
         Add an executable target.
 
-        :param name:
+        :param name: name of the executable.
+        :type name: str
         """
 
         self.targets[name] = {
@@ -111,6 +129,7 @@ class Project(object):
         Set Output Path for Shared Libraries.
 
         :param path: relative or absolute path.
+        :type path: str
         """
 
         if not self.name:
@@ -123,6 +142,7 @@ class Project(object):
         Set Output Path for Static Libraries.
 
         :param path: relative or absolute path.
+        :type path: str
         """
 
         if not self.name:
@@ -135,6 +155,7 @@ class Project(object):
         Set Output Path for Executables.
 
         :param path: relative or absolute path.
+        :type path: str
         """
 
         if not self.name:
@@ -145,10 +166,14 @@ class Project(object):
     def add_version(self, major, minor, patch, tweak=0):
         """
 
-        :param major:
-        :param minor:
-        :param patch:
-        :param tweak:
+        :param major: number of Major Version
+        :type major: int
+        :param minor: Number of Minor Version
+        :type minor: int
+        :param patch: Number of Patch version
+        :type patch: int
+        :param tweak: Number of Tweak version.
+        :type tweak: int
         """
         try:
             isinstance(major, int)
@@ -165,15 +190,20 @@ class Project(object):
             'tweak': tweak
         }
 
-    def add_source_directories(self, dirs_id, target, recursive=False, from_proj=False, *sources):
+    def add_source_directories(self, dirs_id, target, recursive, from_proj, *sources):
         """
-        Add one or many sources directories to Project.
+        Add one or many sources directories to project.
 
         :param dirs_id: id of the directories.
+        :type dirs_id: str
         :param target: add directories to a specific target.
-        :param sources: source directories to add.
+        :type target: str
         :param recursive: recursive or not
-        :param from_proj: append ${PROJECT_DIR} to source directories if True.
+        :type recursive: bool
+        :param from_proj: if True, append to ${PROJECT_DIR} variable, see :func:`~project_dir`
+        :type from_proj: bool
+        :param sources: source directories to add.
+        :type sources: tuple
         """
 
         if target not in self.targets:
@@ -187,12 +217,16 @@ class Project(object):
 
     def add_source_files(self, files_id, target, from_proj=False, *files):
         """
-        Add one or many sources files to Project.
+        Add one or many sources files to project.
 
         :param files_id: id of the files.
+        :type files_id: str
         :param target: add files to a specific target.
-        :param files: files to add.
+        :type target: str
         :param from_proj: add ${PROJECT_DIR} to source files if True.
+        :type from_proj: bool
+        :param files: files to add.
+        :type files: tuple
         """
 
         self.sources_files[files_id] = {
@@ -202,4 +236,11 @@ class Project(object):
         }
 
     def add_dependencies(self, dependencies):
+        """
+        Add some dependencies to project.
+
+        :param dependencies: dependencies of the project, like subdirectories or external link.
+        :type dependencies: Externals
+        """
+
         self.dependencies = dependencies

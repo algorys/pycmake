@@ -18,7 +18,7 @@
 # along with PyCMake.  If not, see <http://www.gnu.org/licenses/>.
 
 """
-    This file is only to tell what's compatible or not with pycmake.
+    This file is only to tell what's compatible or not with **PyCMake**.
 """
 
 Language = ('C', 'CXX')

@@ -78,19 +78,6 @@ class Project(object):
 
         self.definitions = definitions
 
-    def project_dir(self, path):
-        """
-        Defines the main project directory in a variable named: PROJECT_DIR.
-
-        :param path: relative path from CMakeLists.txt.
-        :type path: str
-        """
-
-        if not self.name:
-            raise KeyError('Project was not been created, you must create it before.')
-        else:
-            self.variables.add('PROJECT_DIR', path, option='set')
-
     def add_library_target(self, name, shared=False):
         """
         Add a Library target.
@@ -119,45 +106,6 @@ class Project(object):
             'name': name,
             'target_type': 'executable'
         }
-
-    def library_output_path(self, path):
-        """
-        Output Path for Shared libraries and add LIBRARY_OUTPUT_PATH variable.
-
-        :param path: path where build Shared libraries.
-        :type path: str
-        """
-
-        if not self.name:
-            raise KeyError('Project was not been created, you must create it before.')
-        else:
-            self.variables.add('LIBRARY_OUTPUT_PATH', path, option='set')
-
-    def archive_output_path(self, path):
-        """
-        Output Path for Static libraries and add ARCHIVE_OUTPUT_PATH variable.
-
-        :param path: path where build Static libraries.
-        :type path: str
-        """
-
-        if not self.name:
-            raise KeyError('Project was not been created, you must create it before.')
-        else:
-            self.variables.add('ARCHIVE_OUTPUT_PATH', path, option='set')
-
-    def executable_output_path(self, path):
-        """
-        Output Path for Executables and add EXECUTABLE_OUTPUT_PATH variable.
-
-        :param path: path where build executable.
-        :type path: str
-        """
-
-        if not self.name:
-            raise KeyError('Project was not been created, you must create it before.')
-        else:
-            self.variables.add('EXECUTABLE_OUTPUT_PATH', path, option='set')
 
     def add_version(self, major, minor, patch, tweak=0):
         """

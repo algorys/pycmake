@@ -49,7 +49,7 @@ class TestProject(unittest2.TestCase):
         under_test = Project()
         under_test.create('My2Lib', '')
 
-        under_test.project_dir('./cmake')
+        under_test.variables.project_dir('./cmake')
 
         self.assertTrue(under_test.get_variable('PROJECT_DIR'))
         self.assertEqual('./cmake', under_test.get_variable('PROJECT_DIR')['value'])
@@ -79,9 +79,9 @@ class TestProject(unittest2.TestCase):
         under_test = Project()
         under_test.create('MyProject', 'CXX')
 
-        under_test.executable_output_path('../../build/bin')
-        under_test.library_output_path('../../build/lib')
-        under_test.archive_output_path('../../build/lib')
+        under_test.variables.executable_output_path('../../build/bin')
+        under_test.variables.library_output_path('../../build/lib')
+        under_test.variables.archive_output_path('../../build/lib')
 
         self.assertTrue(under_test.get_variable('EXECUTABLE_OUTPUT_PATH'))
         self.assertEqual('../../build/bin',

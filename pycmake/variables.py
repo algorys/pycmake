@@ -34,7 +34,7 @@ class Variables(object):
         :type name: str
         :param value: Value of variable.
         :type value: str
-        :param option: Option: 'set' or 'filename_component'
+        :param option: option for variable: 'set' or 'filename_component'
         :type option: str
         """
 
@@ -43,3 +43,43 @@ class Variables(object):
             'value': value,
             'option': option
         }
+
+    def project_dir(self, path):
+        """
+        Defines the main project directory in a variable named: PROJECT_DIR.
+
+        :param path: relative path from CMakeLists.txt.
+        :type path: str
+        """
+
+        self.add('PROJECT_DIR', path, option='set')
+
+    def library_output_path(self, path):
+        """
+        Add LIBRARY_OUTPUT_PATH variable for Shared libraries.
+
+        :param path: path where build Shared libraries.
+        :type path: str
+        """
+
+        self.add('LIBRARY_OUTPUT_PATH', path, option='set')
+
+    def archive_output_path(self, path):
+        """
+        Add ARCHIVE_OUTPUT_PATH variable for Static libraries.
+
+        :param path: path where build Static libraries.
+        :type path: str
+        """
+
+        self.add('ARCHIVE_OUTPUT_PATH', path, option='set')
+
+    def executable_output_path(self, path):
+        """
+        Add EXECUTABLE_OUTPUT_PATH variable for executables.
+
+        :param path: path where build executables.
+        :type path: str
+        """
+
+        self.add('EXECUTABLE_OUTPUT_PATH', path, option='set')

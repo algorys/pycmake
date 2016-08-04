@@ -17,8 +17,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with PyCMake.  If not, see <http://www.gnu.org/licenses/>.
 
-from pycmake.project import Project
-from pycmake.cmakelists import CMakeLists
 from pycmake.compiler import Compiler
 from pycmake.flags import Flags
 from pycmake.supported import CCompiler
@@ -31,7 +29,6 @@ class CMake(object):
     """
 
     def __init__(self):
-        self.project = None
         self.settings = {}
         self.gnu = {}
         self.clang = {}

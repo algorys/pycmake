@@ -287,3 +287,15 @@ class CMakeLists(object):
                             self.cmakelists.write(
                                 '    ' + source_file.upper() + '\n')
                 self.cmakelists.write(')\n')
+
+        # Add links
+        if cmake.project.dependencies and cmake.project.targets:
+            libraries = cmake.project.dependencies.libraries
+
+            for lib in libraries:
+                print(libraries.get(lib))
+                self.cmakelists.write('target_link_libraries(')
+                self.cmakelists.write(libraries.get(lib)['target'])
+                for l in libraries.get(lib)['libraries']:
+                    self.cmakelists.write(' ' + l)
+                self.cmakelists.write(')')

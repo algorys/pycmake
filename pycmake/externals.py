@@ -26,6 +26,7 @@ class Externals(object):
     def __init__(self):
         self.sub_directories = {}
         self.link_directories = None
+        self.libraries = {}
 
     def add_subdirectory(self, subdir_id, source_dir, binary_dir):
         """
@@ -53,3 +54,18 @@ class Externals(object):
         """
 
         self.link_directories = directories
+
+    def target_link_libraries(self, target, *libraries):
+        """
+        Link the libraries specified to the associated target.
+
+        :param target: relevant target.
+        :type target: str
+        :param libraries: libraries to link to target.
+        :type libraries: tuple
+        """
+
+        self.libraries[target] = {
+            'target': target,
+            'libraries': libraries
+        }

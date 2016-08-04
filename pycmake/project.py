@@ -38,7 +38,7 @@ class Project(object):
         self.dependencies = None
         self.targets = {}
 
-    def create(self, name, language=''):
+    def create(self, name, language):
         """
         Create a project.
 
@@ -80,22 +80,18 @@ class Project(object):
 
     def project_dir(self, path):
         """
-        Defines the main project directory in a variable named: PROJECTNAME + **_DIR**.\n
-        So if project name is called "Core", variable will be named: "CORE_DIR"
+        Defines the main project directory in a variable named: PROJECT_DIR.
 
-        :param path: relative or absolute path from CMakeLists.txt.
+        :param path: relative path from CMakeLists.txt.
         :type path: str
         """
 
-        if not os.path.exists(path):
-            raise ValueError('This path does not exists : ' + path)
-        elif not self.name:
+        if not self.name:
             raise KeyError('Project was not been created, you must create it before.')
         else:
-            var_name = self.name.upper() + '_DIR'
-            self.variables.add(var_name, path, option='set')
+            self.variables.add('PROJECT_DIR', path, option='set')
 
-    def add_library(self, name, shared=False):
+    def add_library_target(self, name, shared=False):
         """
         Add a Library target.
 
@@ -111,7 +107,7 @@ class Project(object):
             'target_type': 'library'
         }
 
-    def add_executable(self, name):
+    def add_executable_target(self, name):
         """
         Add an executable target.
 
@@ -126,9 +122,9 @@ class Project(object):
 
     def library_output_path(self, path):
         """
-        Set Output Path for Shared Libraries.
+        Output Path for Shared libraries and add LIBRARY_OUTPUT_PATH variable.
 
-        :param path: relative or absolute path.
+        :param path: path where build Shared libraries.
         :type path: str
         """
 
@@ -139,9 +135,9 @@ class Project(object):
 
     def archive_output_path(self, path):
         """
-        Set Output Path for Static Libraries.
+        Output Path for Static libraries and add ARCHIVE_OUTPUT_PATH variable.
 
-        :param path: relative or absolute path.
+        :param path: path where build Static libraries.
         :type path: str
         """
 
@@ -152,9 +148,9 @@ class Project(object):
 
     def executable_output_path(self, path):
         """
-        Set Output Path for Executables.
+        Output Path for Executables and add EXECUTABLE_OUTPUT_PATH variable.
 
-        :param path: relative or absolute path.
+        :param path: path where build executable.
         :type path: str
         """
 

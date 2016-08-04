@@ -51,8 +51,8 @@ class TestProject(unittest2.TestCase):
 
         under_test.project_dir('./cmake')
 
-        self.assertTrue(under_test.get_variable('MY2LIB_DIR'))
-        self.assertEqual('./cmake', under_test.get_variable('MY2LIB_DIR')['value'])
+        self.assertTrue(under_test.get_variable('PROJECT_DIR'))
+        self.assertEqual('./cmake', under_test.get_variable('PROJECT_DIR')['value'])
 
     def test_preprocessor_definition(self):
         under_test = Project()
@@ -66,13 +66,13 @@ class TestProject(unittest2.TestCase):
 
         self.assertFalse(under_test.targets)
 
-        under_test.add_library('MyLib', shared=True)
+        under_test.add_library_target('MyLib', shared=True)
 
         self.assertTrue(under_test.targets)
         self.assertEqual(True, under_test.targets.get('MyLib')['shared'])
         self.assertEqual('library', under_test.targets.get('MyLib')['target_type'])
 
-        under_test.add_executable('MyExe')
+        under_test.add_executable_target('MyExe')
         self.assertEqual('executable', under_test.targets.get('MyExe')['target_type'])
 
     def test_outputs(self):
@@ -97,7 +97,7 @@ class TestProject(unittest2.TestCase):
         under_test = Project()
         under_test.create('MyProject', 'CXX')
 
-        under_test.add_executable('myexe')
+        under_test.add_executable_target('myexe')
 
         under_test.add_source_files('cpp', 'myexe', False, '../../main.cpp', '../../graphics.cpp')
         under_test.add_source_files('headers', 'myexe', True, '../../graphics.h', '../../stdafx.h')
@@ -116,7 +116,7 @@ class TestProject(unittest2.TestCase):
     def test_add_sources_directory(self):
         under_test = Project()
         under_test.create('MyLib', 'CXX')
-        under_test.add_library('mylib', shared=True)
+        under_test.add_library_target('mylib', shared=True)
 
         under_test.add_source_directories('dir_cpp',
                                          'mylib',

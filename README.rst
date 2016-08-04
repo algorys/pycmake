@@ -34,7 +34,7 @@ Development
 Introduction
 ============
 
-PyCMake is a Python3 module to create, manage and build CMake projects.
+PyCMake is a Python module to create, manage and build CMake projects. He tries to cover up the features of CMake.
 
 Documentation
 =============
@@ -44,5 +44,5 @@ Documentation is available on `Read The Docs <http://pycmake.readthedocs.io/en/l
 Status
 ======
 
-**WARNING:** actually this module is not ready for prod. If you install it, you do it at your own risk !
+**WARNING:** actually this module is not ready for production and can undergo many changes. If you install it, you do it at your own risk !
 

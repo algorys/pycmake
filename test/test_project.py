@@ -45,14 +45,6 @@ class TestProject(unittest2.TestCase):
         self.assertEqual({'name': 'PROJECT_NAME', 'value': 'MyProject', 'option': 'set'},
                          under_test.get_variable('PROJECT_NAME'))
 
-    def test_project_dir(self):
-        under_test = Project()
-        under_test.create('My2Lib', '')
-
-        under_test.variables.project_dir('./cmake')
-
-        self.assertTrue(under_test.get_variable('PROJECT_DIR'))
-        self.assertEqual('./cmake', under_test.get_variable('PROJECT_DIR')['value'])
 
     def test_preprocessor_definition(self):
         under_test = Project()
@@ -74,24 +66,6 @@ class TestProject(unittest2.TestCase):
 
         under_test.add_executable_target('MyExe')
         self.assertEqual('executable', under_test.targets.get('MyExe')['target_type'])
-
-    def test_outputs(self):
-        under_test = Project()
-        under_test.create('MyProject', 'CXX')
-
-        under_test.variables.executable_output_path('../../build/bin')
-        under_test.variables.library_output_path('../../build/lib')
-        under_test.variables.archive_output_path('../../build/lib')
-
-        self.assertTrue(under_test.get_variable('EXECUTABLE_OUTPUT_PATH'))
-        self.assertEqual('../../build/bin',
-                         under_test.get_variable('EXECUTABLE_OUTPUT_PATH')['value'])
-        self.assertTrue(under_test.get_variable('LIBRARY_OUTPUT_PATH'))
-        self.assertEqual('../../build/lib',
-                         under_test.get_variable('LIBRARY_OUTPUT_PATH')['value'])
-        self.assertTrue(under_test.get_variable('ARCHIVE_OUTPUT_PATH'))
-        self.assertEqual('../../build/lib',
-                         under_test.get_variable('ARCHIVE_OUTPUT_PATH')['value'])
 
     def test_add_files(self):
         under_test = Project()

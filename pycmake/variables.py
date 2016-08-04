@@ -26,7 +26,7 @@ class Variables(object):
     def __init__(self):
         self.values = {}
 
-    def add(self, name, value, option=''):
+    def add(self, name, value, option='set'):
         """
         Add a variable.
 
@@ -34,10 +34,12 @@ class Variables(object):
         :type name: str
         :param value: Value of variable.
         :type value: str
-        :param option: option for variable: 'set' or 'filename_component'
+        :param option: option for variable: 'set' or 'get_filename_component'
         :type option: str
         """
 
+        if ' ' in name:
+            raise ValueError('Variable names must not contain spaces.')
         self.values[name] = {
             'name': name,
             'value': value,
@@ -52,7 +54,7 @@ class Variables(object):
         :type path: str
         """
 
-        self.add('PROJECT_DIR', path, option='set')
+        self.add('PROJECT_DIR', path, option='get_filename_component')
 
     def library_output_path(self, path):
         """

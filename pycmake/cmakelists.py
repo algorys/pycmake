@@ -52,12 +52,16 @@ class CMakeLists(object):
         except PermissionError as e:
             sys.exit('Maybe you do not have sufficient rights : ' + str(e))
 
-    def write_cmakelists(self, cmake):  # pragma: no cover
+    def write_cmakelists(self, cmake, project):  # pragma: no cover
         """
         Write CMakeLists.txt from the CMake data.
 
-        :param cmake: CMake object, who contains a Project, Compilers and Targets.
+        :param cmake: CMake object,
+         with :class:`~pycmake.compiler.Compiler` and :class:`~pycmake.flags.Flags`.
         :type cmake: CMake
+        :param project: Project object with his target,
+         sources and :class:`~pycmake.externals.Externals`.
+        :type project: Project
         """
 
         if self.cmakelists:
@@ -86,10 +90,10 @@ class CMakeLists(object):
             self.cmakelists.write('# WARNING: policy is not set.\n')
 
         # Write variables
-        if cmake.project.variables:
-            for var in cmake.project.variables.values:
-                current_var = dict(cmake.project.get_variable(var))
-                if current_var.get('option') == 'filename_component':
+        if project.variables:
+            for var in project.variables.values:
+                current_var = dict(project.get_variable(var))
+                if current_var.get('option') == 'get_filename_component':
                     self.cmakelists.write(
                         'get_filename_component('
                         + current_var.get('name')
@@ -109,7 +113,7 @@ class CMakeLists(object):
 
         # Write Project
         self.cmakelists.write(
-            'project(${PROJECT_NAME} ' + cmake.project.language + ')\n')
+            'project(${PROJECT_NAME} ' + project.language + ')\n')
 
         # GNU Flags
         if cmake.gnu_flags:
@@ -207,90 +211,84 @@ class CMakeLists(object):
             self.cmakelists.write('endif()\n')
 
         # Definitions
-        if cmake.project.definitions:
+        if project.definitions:
             self.cmakelists.write('add_definitions(\n')
-            for index, definition in enumerate(cmake.project.definitions):
+            for index, definition in enumerate(project.definitions):
                 self.cmakelists.write('    -D' + definition + '\n')
             self.cmakelists.write(')\n')
 
         # Files: Sources_Dir
-        if cmake.project.sources_dirs:
-            for source_dir in cmake.project.sources_dirs:
+        if project.sources_dirs:
+            for source_dir in project.sources_dirs:
                 self.cmakelists.write('file(')
-                if cmake.project.sources_dirs.get(source_dir)['recursive']:
+                if project.sources_dirs.get(source_dir)['recursive']:
                     self.cmakelists.write('GLOB_RECURSE')
                 else:
                     self.cmakelists.write('GLOB')
                 self.cmakelists.write(' ' + source_dir.upper() + '\n')
-                sources_dir = cmake.project.sources_dirs.get(source_dir)['sources']
+                sources_dir = project.sources_dirs.get(source_dir)['sources']
                 for index, source in enumerate(sources_dir):
-                    if cmake.project.sources_dirs.get(source_dir)['from_proj']:
+                    if project.sources_dirs.get(source_dir)['from_proj']:
                         self.cmakelists.write(
                             '    ${PROJECT_DIR}/' + source + '\n')
                     else:
                         self.cmakelists.write('    ' + source + '\n')
                 self.cmakelists.write(')\n')
-        # Files: Files
-        if cmake.project.sources_files:
-            for source_file in cmake.project.sources_files:
-                self.cmakelists.write('file(')
-                self.cmakelists.write(source_file.upper() + '\n')
-                for index, file in enumerate(cmake.project.sources_files.get(source_file)['files']):
-                    if cmake.project.sources_files.get(source_file)['from_proj']:
-                        self.cmakelists.write(
-                            '    ${PROJECT_DIR}/' + file + '\n')
-                    else:
-                        self.cmakelists.write('    ' + file + '\n')
-                self.cmakelists.write(')\n')
 
         # Dependencies
-        if cmake.project.dependencies:
-            if cmake.project.dependencies.sub_directories:
-                for sub in cmake.project.dependencies.sub_directories:
-                    current_sub = cmake.project.dependencies.sub_directories.get(
+        if project.dependencies:
+            if project.dependencies.sub_directories:
+                for sub in project.dependencies.sub_directories:
+                    current_sub = project.dependencies.sub_directories.get(
                         sub)
                     self.cmakelists.write(
                         'add_subdirectory(' + current_sub['source_dir'] + ' '
                         + current_sub['binary_dir'] + ')\n')
-            if cmake.project.dependencies.add_link_directories:
-                link_directories = cmake.project.dependencies.link_directories
+            if project.dependencies.add_link_directories:
+                link_directories = project.dependencies.link_directories
                 for index, link in enumerate(link_directories):
                     self.cmakelists.write(
                         'link_directories(' + link + ')\n')
 
-        # Add target
-        if cmake.project.targets:
-            targets = cmake.project.targets
+        # Add Target and Files
+        if project.targets:
+            targets = project.targets
             for target in targets:
                 if targets.get(target)['target_type'] == 'library':
                     self.cmakelists.write('add_library(')
-                    if targets.get(target)['name'] == cmake.project.name:
-                        self.cmakelists.write('${PROJECT_NAME} ')
-                    else:
-                        self.cmakelists.write(
-                            targets.get(target)['name'] + ' ')
-                    if targets.get(target)['shared']:
-                        self.cmakelists.write('SHARED\n')
-                    else:
-                        self.cmakelists.write('STATIC\n')
+                if targets.get(target)['target_type'] == 'executable':
+                    self.cmakelists.write('add_executable(')
+                if targets.get(target)['name'] == project.name:
+                    self.cmakelists.write('${PROJECT_NAME} ')
+                else:
+                    self.cmakelists.write(
+                        targets.get(target)['name'] + ' ')
+                if targets.get(target)['shared']:
+                    self.cmakelists.write('SHARED\n')
+                else:
+                    self.cmakelists.write('STATIC\n')
 
-                if cmake.project.sources_dirs:
-                    for source_dir in cmake.project.sources_dirs:
-                        target_dir = cmake.project.sources_dirs.get(source_dir)['target']
+                if project.sources_dirs:
+                    for source_dir in project.sources_dirs:
+                        target_dir = project.sources_dirs.get(source_dir)['target']
                         if target_dir == targets.get(target)['name']:
                             self.cmakelists.write(
-                                '    ' + source_dir.upper() + '\n')
-                if cmake.project.sources_files:
-                    for source_file in cmake.project.sources_files:
-                        target_files = cmake.project.sources_files.get(source_file)['target']
-                        if target_files == targets.get(target)['name']:
-                            self.cmakelists.write(
-                                '    ' + source_file.upper() + '\n')
+                                '    ${' + source_dir.upper() + '}\n')
+                if project.sources_files:
+                    for source_file in project.sources_files:
+                        files = project.sources_files.get(source_file)['files']
+                        for index, file in enumerate(files):
+                            if project.sources_files.get(source_file)['from_proj']:
+                                self.cmakelists.write(
+                                    '    ${PROJECT_DIR}/' + file + '\n')
+                            else:
+                                self.cmakelists.write('    ' + file + '\n')
+                        self.cmakelists.write(')\n')
                 self.cmakelists.write(')\n')
 
         # Add links
-        if cmake.project.dependencies and cmake.project.targets:
-            libraries = cmake.project.dependencies.libraries
+        if project.dependencies and project.targets:
+            libraries = project.dependencies.libraries
 
             for lib in libraries:
                 print(libraries.get(lib))

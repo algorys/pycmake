@@ -36,26 +36,9 @@ class CMake(object):
         self.gnu = {}
         self.clang = {}
         self.msvc = {}
-        self.cmakelist = CMakeLists()
         self.gnu_flags = {}
         self.clang_flags = {}
         self.msvc_flags = {}
-
-    def add_project(self, name, language):
-        """
-        Add a CMake project.
-
-        :param name: name of the project
-        :type name: str
-        :param language: language.
-        :type language: str
-        """
-
-        if language == 'C' or language == 'CXX' or language == '':
-            self.project = Project()
-            self.project.create(name, language)
-        else:
-            raise ValueError('Language ' + language + ' is not currently supported !')
 
     def add_settings(self, min_required, policy):
         """

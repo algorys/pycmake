@@ -21,6 +21,7 @@ import unittest2
 
 from pycmake.cmake import CMake
 from pycmake.compiler import Compiler
+from pycmake.flags import Flags
 
 
 class TestCMake(unittest2.TestCase):
@@ -37,15 +38,6 @@ class TestCMake(unittest2.TestCase):
     msvc = Compiler()
     msvc.create('MSVC', 'CXX', 'MSVC++', 14, 'C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\bin\\amd64\\vcvars64.bat')
 
-    def test_add_project(self):
-        under_test = CMake()
-
-        under_test.add_project('project', 'CXX')
-
-        self.assertIsNotNone(under_test.project)
-        self.assertEqual('project', under_test.project.name)
-        self.assertEqual('CXX', under_test.project.language)
-
     def test_add_settings(self):
         under_test = CMake()
 
@@ -53,7 +45,16 @@ class TestCMake(unittest2.TestCase):
         self.assertEqual('VERSION 2.7', under_test.settings.get('min_required'))
         self.assertEqual('VERSION 2.7', under_test.settings.get('policy'))
 
-    def test_add_clang_compiler(self):
+    def test_gnu_compiler(self):
+        under_test = CMake()
+
+        self.assertFalse(under_test.gnu)
+
+        under_test.gnu_compiler(TestCMake.gcc)
+
+        self.assertTrue(under_test.gnu)
+
+    def test_clang_compiler(self):
         under_test = CMake()
 
         self.assertFalse(under_test.clang)
@@ -62,7 +63,7 @@ class TestCMake(unittest2.TestCase):
 
         self.assertTrue(under_test.clang)
 
-    def test_add_msvc_compiler(self):
+    def test_msvc_compiler(self):
         under_test = CMake()
 
         self.assertFalse(under_test.msvc)
@@ -82,3 +83,40 @@ class TestCMake(unittest2.TestCase):
 
         self.assertTrue(under_test.clang)
         self.assertTrue(under_test.gnu)
+
+    def test_add_flags_to_compiler(self):
+        under_test = CMake()
+
+        flags_gnu_test = Flags('G++-5', '-std=c++11', 'Wall', '-GL')
+        flags_clang_test = Flags('Clang++-3.7', '-std=c++11 -stdlib=libc++', 'Wall', '-GL')
+        flags_msvc_test = Flags('MSVC++', '/W4', '/MDd', '/GL')
+
+        self.assertFalse(under_test.gnu_flags)
+        self.assertFalse(under_test.clang_flags)
+        self.assertFalse(under_test.msvc_flags)
+
+        under_test.flags_to_compiler('G++', flags_gnu_test)
+        under_test.flags_to_compiler('CLANG++', flags_clang_test)
+        under_test.flags_to_compiler('MSVC++', flags_msvc_test)
+
+        self.assertTrue(under_test.gnu_flags)
+        self.assertTrue(under_test.gnu_flags.get('C++'))
+        self.assertEqual('G++-5', under_test.gnu_flags.get('C++').flags_id)
+        self.assertEqual('-std=c++11', under_test.gnu_flags.get('C++').general)
+        self.assertEqual('Wall', under_test.gnu_flags.get('C++').debug)
+        self.assertEqual('-GL', under_test.gnu_flags.get('C++').release)
+
+        self.assertTrue(under_test.clang_flags)
+        self.assertTrue(under_test.clang_flags.get('C++'))
+        self.assertEqual('Clang++-3.7', under_test.clang_flags.get('C++').flags_id)
+        self.assertEqual('-std=c++11 -stdlib=libc++', under_test.clang_flags.get('C++').general)
+        self.assertEqual('Wall', under_test.clang_flags.get('C++').debug)
+        self.assertEqual('-GL', under_test.clang_flags.get('C++').release)
+
+        self.assertTrue(under_test.msvc_flags)
+        self.assertTrue(under_test.msvc_flags.get('C++'))
+        self.assertEqual('MSVC++', under_test.msvc_flags.get('C++').flags_id)
+        self.assertEqual('/W4', under_test.msvc_flags.get('C++').general)
+        self.assertEqual('/MDd', under_test.msvc_flags.get('C++').debug)
+        self.assertEqual('/GL', under_test.msvc_flags.get('C++').release)
+

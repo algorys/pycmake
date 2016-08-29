@@ -13,6 +13,7 @@ Contents:
 
    intro
    install
+   use
    pycmake
 
 Indices and tables

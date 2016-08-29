@@ -13,7 +13,10 @@ Contents:
 
    intro
    install
-   use
+   cmake
+   project
+   dependencies
+   cmakelists
    pycmake
 
 Indices and tables

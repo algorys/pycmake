@@ -112,8 +112,14 @@ class CMakeLists(object):
                         'Variable: [' + current_var.get('name') + '] is incorrect !')
 
         # Write Project
+        if project.language == 'C++':
+            language = 'CXX'
+        elif project.language == 'C':
+            language = project.language
+        else:
+            language = ''
         self.cmakelists.write(
-            'project(${PROJECT_NAME} ' + project.language + ')\n')
+            'project(${PROJECT_NAME} ' + language + ')\n')
 
         # GNU Flags
         if cmake.gnu_flags:

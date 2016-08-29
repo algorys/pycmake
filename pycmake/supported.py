@@ -21,6 +21,6 @@
     This file is only to tell what's compatible or not with **PyCMake**.
 """
 
-Language = ('C', 'CXX')
+Language = ('C', 'C++')
 CCompiler = ('GCC', 'CLANG', 'MSVC')
 CXXCompiler = ('G++', 'CLANG++', 'MSVC++')

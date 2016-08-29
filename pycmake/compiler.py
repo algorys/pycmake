@@ -62,7 +62,7 @@ class Compiler(object):
         :type name: str
         :param language: language of compiler
         :type language: str
-        :param compiler_id: compiler (GCC, GXX, CLANG, CLANGXX, MSVC)
+        :param compiler_id: compiler (GCC, G++, CLANG, CLANG++, MSVC or MSVC++)
         :type compiler_id: str
         :param version: version of the compiler.
         :type version: int or float

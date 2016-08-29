@@ -30,13 +30,13 @@ class TestCMake(unittest2.TestCase):
     """
 
     clang_cxx = Compiler()
-    clang_cxx.create('Clang++-Debian', 'CXX', 'CLANG++', 3.7, '/usr/bin/clang++-3.7')
+    clang_cxx.create('Clang++-Debian', 'C++', 'CLANG++', 3.7, '/usr/bin/clang++-3.7')
 
     gcc = Compiler()
     gcc.create('GCC-Debian', 'C', 'GCC', 5, '/usr/bin/gcc-5')
 
     msvc = Compiler()
-    msvc.create('MSVC', 'CXX', 'MSVC++', 14, 'C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\bin\\amd64\\vcvars64.bat')
+    msvc.create('MSVC', 'C++', 'MSVC++', 14, 'C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\bin\\amd64\\vcvars64.bat')
 
     def test_add_settings(self):
         under_test = CMake()

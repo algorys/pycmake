@@ -96,7 +96,7 @@ class CMakeLists(object):
             if project.dependencies:
                 self.write_links(project.dependencies)
 
-    def write_title(self, title):
+    def write_title(self, title):  # pragma: no cover
         self.cmakelists.write(
             '\n#####################################################################\n'
         )
@@ -352,7 +352,7 @@ class CMakeLists(object):
                 self.cmakelists.write(
                     'add_subdirectory(' + current_sub['source_dir'] + ' '
                     + current_sub['binary_dir'] + ')\n')
-        if dependencies.add_link_directories:
+        if dependencies.link_directories:
             link_directories = dependencies.link_directories
             for index, link in enumerate(link_directories):
                 self.cmakelists.write(

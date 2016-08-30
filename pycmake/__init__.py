@@ -24,6 +24,13 @@
     This module is a tool for CMake to help create, manage and build CMake Projects.
 """
 
+from pycmake.cmake import CMake
+from pycmake.cmakelists import CMakeLists
+from pycmake.compiler import Compiler
+from pycmake.externals import Externals
+from pycmake.flags import Flags
+from pycmake.project import Project
+
 # Application version and manifest
 VERSION = (0, 1, 0)
 __application__ = u"PyCMake"

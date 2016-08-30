@@ -28,7 +28,7 @@ Development
     :target: https://coveralls.io/github/algorys/pycmake
 
 .. image:: https://readthedocs.org/projects/pycmake/badge/?version=develop
-    :target: http://pycmake.readthedocs.io/en/latest/?badge=develop
+    :target: http://pycmake.readthedocs.io/en/develop/?badge=develop
     :alt: Documentation Status
 
 Introduction

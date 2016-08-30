@@ -17,6 +17,8 @@ Initialise object and create your project::
 
 Currently, only **C** and **C++** are valid language. During :func:`create`, PyCMake create a variable named **PROJECT_NAME** (See below).
 
+.. _variables:
+
 CMake Variables
 ---------------
 
@@ -78,6 +80,8 @@ You have to give the **true** name of your executable. For an executable called 
     project.add_executable_target('myexe')
 
 That's all.
+
+.. _files:
 
 Files and Directories
 ---------------------

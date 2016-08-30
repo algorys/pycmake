@@ -36,7 +36,7 @@ class TestCMakeLists(unittest2.TestCase):
 
         self.assertIsNone(under_test.cmakelists)
 
-        under_test.create_file('./cmake')
+        under_test.init_file('./cmake')
 
         self.assertTrue(os.path.isfile('./cmake/CMakeLists.txt'))
         self.assertIsNotNone(under_test.cmakelists)

@@ -20,8 +20,8 @@ Create a :any:`CMakeLists` object::
 
 Initialize file and write it::
 
-    cmakelist.create_file('./platform/cmake')
     # PyCmake will try to create folders if not exists.
+    cmakelist.init_file('./platform/cmake')
     cmakelist.write_cmakelists(cmake, project)
 
 Normally, you have a **CMakeLists.txt** ready to use, created in the specified folder !

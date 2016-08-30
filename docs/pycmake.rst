@@ -1,4 +1,4 @@
-pycmake package
+PyCMake Package
 ===============
 
 Module contents

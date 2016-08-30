@@ -71,7 +71,11 @@ class CMakeLists(object):
         if project.name and project.targets:
             # Write data for project.
             self.write_variables(project)
-            self.write_project_data(project.language, project.definitions)
+            self.write_project(project.language)
+            if project.version:
+                self.write_version(project.version)
+            if project.definitions:
+                self.write_preprocessor_definitions(project.definitions)
 
             # Write Flags for all compilers.
             if cmake.gnu_flags:
@@ -164,14 +168,12 @@ class CMakeLists(object):
                 raise ValueError(
                     'Variable: [' + current_var.get('name') + '] is incorrect !')
 
-    def write_project_data(self, language, definitions):  # pragma: no cover
+    def write_project(self, language):  # pragma: no cover
         """
         Write project and definitions.
 
         :param language: language of project.
         :type language: str
-        :param definitions: definitions of project.
-        :type definitions: tuple
         """
 
         self.write_title('PROJECT')
@@ -185,6 +187,27 @@ class CMakeLists(object):
         self.cmakelists.write(
             'project(${PROJECT_NAME} ' + current_language + ')\n')
 
+    def write_version(self, version):
+        """
+        Write version variables.
+
+        :param version: version numbers of project.
+        :type version: dict
+        """
+
+        self.cmakelists.write('\n')
+        self.cmakelists.write('set(CMAKE_MAJOR_VERSION ' + str(version['major']) + ')\n')
+        self.cmakelists.write('set(CMAKE_MINOR_VERSION ' + str(version['minor']) + ')\n')
+        self.cmakelists.write('set(CMAKE_PATCH_VERSION ' + str(version['patch']) + ')\n')
+        self.cmakelists.write('set(CMAKE_TWEAK_VERSION ' + str(version['tweak']) + ')\n')
+
+    def write_preprocessor_definitions(self, definitions):  # pragma: no cover
+        """
+        Write preprocessor definitions of project.
+
+        :param definitions: preprocessor definitions.
+        :type definitions: tuple
+        """
         self.write_title('DEFINITIONS')
         # Preprocessor Definitions
         if definitions:

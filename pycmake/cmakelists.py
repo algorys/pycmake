@@ -187,7 +187,7 @@ class CMakeLists(object):
         self.cmakelists.write(
             'project(${PROJECT_NAME} ' + current_language + ')\n')
 
-    def write_version(self, version):
+    def write_version(self, version):  # pragma: no cover
         """
         Write version variables.
 

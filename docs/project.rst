@@ -83,51 +83,6 @@ That's all.
 
 .. _files:
 
-Files and Directories
----------------------
-
-**Note:** these methods will be reworked in the future to facilitate the addition of files and folders.
-
-There are two distinct methods in PyCMake to add folders or files to your target. Each must receive a :class:`tuple` of them to get it work. They can be append to your `PROJECT_DIR` variable or not.
-
-For folders, you can set `recursive` mode or not.
-
-Here is a full example for a library and his folders::
-
-    project.add_library_target('mylib', shared=True)
-    project.add_source_directories('dir_cpp',
-                                   'mylib',
-                                   True,
-                                   False,
-                                   '../../lib/src/*.cpp',
-                                   '../../lib/src/test/*.cpp',
-                                   )
-    project.add_source_directories('dir_header',
-                                   'mylib',
-                                   True,
-                                   False,
-                                   '../../lib/src/includes/*.h',
-                                   '../../lib/src/test/includes/*.h',
-                                   )
-
-And here, for add specific files::
-
-    project.add_source_files('cpp_files',
-                             'mylib',
-                             True,
-                             '../../main.cpp',
-                             '../../graphics.cpp',
-                             )
-    project.add_source_files('headers_files',
-                             'mylib',
-                             True,
-                             '../../stdafx.h',
-                             '../../main.h',
-                             '../../graphics.h',
-                             )
-
-PyCMake then associate these files to the target to compile.
-
 Preprocessor Definitions
 ------------------------
 
@@ -136,4 +91,15 @@ If your project need specific definitions for preprocessor, you can set it like 
     project.preprocessor_definitions('UNICODE', '_UNICODE', 'MYLIB_EXPORTS')
 
 Easy and simple.
+
+Sources
+-------
+
+Your target will obviously need files to be built. They are added by :any:`Sources` object. Once done, simply add them to a target that you created::
+
+    project.add_sources_to_target('myexe', src)
+
+See the **Next Section** for more details.
+
+
 

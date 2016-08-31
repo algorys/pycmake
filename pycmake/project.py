@@ -73,7 +73,7 @@ class Project(object):
         """
         Add Preprocessor Definitions.
 
-        :param definitions: add preprocessor definitions to project: FOO BAR
+        :param definitions: add preprocessor definitions to project. Ex: UNICODE
         :type definitions: tuple
         """
 

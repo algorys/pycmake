@@ -15,6 +15,7 @@ Contents:
    install
    cmake
    project
+   sources
    dependencies
    cmakelists
    pycmake

@@ -57,7 +57,7 @@ class Sources(object):
         """
         Make sources directory recursive.
 
-        :param recursive: recursive or not.
+        :param recursive: recursive or not. Default: False.
         :type recursive: bool
         """
 

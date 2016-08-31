@@ -21,6 +21,7 @@ import unittest2
 
 from pycmake.project import Project
 from pycmake.externals import Externals
+from pycmake.sources import Sources, SRC_TYPE
 
 
 class TestProject(unittest2.TestCase):
@@ -70,51 +71,41 @@ class TestProject(unittest2.TestCase):
     def test_add_files(self):
         under_test = Project()
         under_test.create('MyProject', 'CXX')
-
         under_test.add_executable_target('myexe')
 
-        under_test.add_source_files('cpp', 'myexe', False, '../../main.cpp', '../../graphics.cpp')
-        under_test.add_source_files('headers', 'myexe', True, '../../graphics.h', '../../stdafx.h')
-        under_test.add_source_files('config', 'myexe', True, '/home/user/config/config.cpp')
+        src_files = Sources()
+        src_files.add('files', SRC_TYPE[1], ['src/main.cpp', 'src/stream.cpp'])
 
-        test_cpp = ('../../main.cpp', '../../graphics.cpp')
-        self.assertFalse(under_test.sources_files.get('cpp')['from_proj'])
-        self.assertEqual(test_cpp,
-                         under_test.sources_files.get('cpp')['files'])
-        test_header = ('../../graphics.h', '../../stdafx.h')
-        self.assertTrue(under_test.sources_files.get('headers')['from_proj'])
-        self.assertEqual(test_header,
-                         under_test.sources_files.get('headers')['files'])
-        self.assertTrue(under_test.sources_files.get('config')['from_proj'])
+        under_test.add_sources_to_target('myexe', src_files)
+
+        self.assertFalse(under_test.sources_files.get('files')['from_proj'])
+        self.assertEqual(['src/main.cpp', 'src/stream.cpp'],
+                         under_test.sources_files.get('files')['files'])
 
     def test_add_sources_directory(self):
         under_test = Project()
         under_test.create('MyLib', 'CXX')
         under_test.add_library_target('mylib', shared=True)
 
-        under_test.add_source_directories('dir_cpp',
-                                         'mylib',
-                                          True,
-                                          False,
-                                         '../../lib/src/*.cpp',
-                                         '../../lib/src/test/*.cpp',
-                                          )
-        under_test.add_source_directories('dir_header',
-                                         'mylib',
-                                          True,
-                                          False,
-                                         '../../lib/src/includes/*.h',
-                                         '../../lib/src/test/include/*.h',
-                                          )
+        src_dir_cpp = Sources()
+        src_dir_cpp.add('cpp', SRC_TYPE[0], ['src/*.cpp', 'src/test/*.cpp'], from_proj=True)
+        src_dir_cpp.make_recursive(True)
 
-        self.assertEqual(('../../lib/src/*.cpp', '../../lib/src/test/*.cpp'),
-                         under_test.sources_dirs.get('dir_cpp')['sources'])
-        self.assertTrue(under_test.sources_dirs.get('dir_cpp')['recursive'])
-        self.assertFalse(under_test.sources_dirs.get('dir_cpp')['from_proj'])
+        src_dir_header = Sources()
+        src_dir_header.add('header', SRC_TYPE[0], ['src/*.h', 'src/test/*.h'])
 
-        self.assertEqual(('../../lib/src/includes/*.h', '../../lib/src/test/include/*.h'),
-                         under_test.sources_dirs.get('dir_header')['sources'])
-        self.assertTrue(under_test.sources_dirs.get('dir_header')['recursive'])
+        under_test.add_sources_to_target('mylib', src_dir_cpp)
+        under_test.add_sources_to_target('mylib', src_dir_header)
+
+        self.assertEqual(['src/*.cpp', 'src/test/*.cpp'],
+                         under_test.sources_dirs.get('cpp')['sources'])
+        self.assertTrue(under_test.sources_dirs.get('cpp')['recursive'])
+        self.assertTrue(under_test.sources_dirs.get('cpp')['from_proj'])
+
+        self.assertEqual(['src/*.h', 'src/test/*.h'],
+                         under_test.sources_dirs.get('header')['sources'])
+        self.assertFalse(under_test.sources_dirs.get('header')['recursive'])
+        self.assertFalse(under_test.sources_dirs.get('header')['from_proj'])
 
     def test_add_version(self):
         under_test = Project()

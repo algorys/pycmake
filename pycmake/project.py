@@ -19,6 +19,8 @@
 
 
 from pycmake.variables import Variables
+from pycmake.sources import Sources
+from pycmake.sources import SRC_TYPE
 
 
 class Project(object):
@@ -133,50 +135,31 @@ class Project(object):
             'tweak': tweak
         }
 
-    def add_source_directories(self, dirs_id, target, recursive, from_proj, *sources):
+    def add_sources_to_target(self, target, src):
         """
-        Add one or many sources directories to project.
+        Add sources directory or files to a specific target.
 
-        :param dirs_id: id of the directories.
-        :type dirs_id: str
-        :param target: add directories to a specific target.
+        :param target: existing target.
         :type target: str
-        :param recursive: recursive or not
-        :type recursive: bool
-        :param from_proj: if True, append to ${PROJECT_DIR} variable, see :func:`~project_dir`
-        :type from_proj: bool
-        :param sources: source directories to add.
-        :type sources: tuple
+        :param src: the sources to add.
+        :type src: Sources
         """
 
         if target not in self.targets:
-            raise ValueError('Target: ' + target + ' does not exist. Create it before !')
-        self.sources_dirs[dirs_id] = {
-            'target': target,
-            'sources': sources,
-            'recursive': recursive,
-            'from_proj': from_proj,
-        }
-
-    def add_source_files(self, files_id, target, from_proj=False, *files):
-        """
-        Add one or many sources files to project.
-
-        :param files_id: id of the files.
-        :type files_id: str
-        :param target: add files to a specific target.
-        :type target: str
-        :param from_proj: add ${PROJECT_DIR} to source files if True.
-        :type from_proj: bool
-        :param files: files to add.
-        :type files: tuple
-        """
-
-        self.sources_files[files_id] = {
-            'target': target,
-            'files': files,
-            'from_proj': from_proj,
-        }
+            raise ValueError('Target: [' + target + '] does not exist !')
+        if src.src_type == SRC_TYPE[0]:
+            self.sources_dirs[src.name] = {
+                'target': target,
+                'sources': src.sources,
+                'from_proj': src.from_proj,
+                'recursive': src.is_recursive(),
+            }
+        if src.src_type == SRC_TYPE[1]:
+            self.sources_files[src.name] = {
+                'target': target,
+                'files': src.sources,
+                'from_proj': src.from_proj,
+            }
 
     def add_dependencies(self, dependencies):
         """

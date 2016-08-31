@@ -60,6 +60,14 @@ pycmake.project
     :undoc-members:
     :show-inheritance:
 
+pycmake.sources
+---------------
+
+.. automodule:: pycmake.sources
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 pycmake.supported
 -----------------
 

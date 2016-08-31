@@ -22,7 +22,21 @@
 """
 
 LANGUAGE = ('C', 'C++')
+"""
+:var LANGUAGE: supported languages.
+"""
+
 C_COMPILER = ('GCC', 'CLANG', 'MSVC')
+"""
+:var C_COMPILER: supported C Compilers.
+"""
+
 CXX_COMPILER = ('G++', 'CLANG++', 'MSVC++')
+"""
+:var CXX_COMPILER: supported C++ Compiler.
+"""
 
 SRC_TYPE = ('DIR', 'FILE')
+"""
+:var SRC_TYPE: supported Sources.
+"""

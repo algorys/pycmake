@@ -39,9 +39,12 @@ class Compiler(object):
         """
         Check if compiler is valid. Used for each :func:`~create`.
 
-        :param language: language of compiler (C or CXX)
+        :param language: language of project. For more details, see
+            :func:`LANGUAGE <pycmake.supported.LANGUAGE>`.
         :type language: str
-        :param compiler_id: compiler_id (GCC, G++, CLANG, CLANG++, MSVC or MSVC++)
+        :param compiler_id: id of compiler. For more details, see
+            :func:`C_COMPILER <pycmake.supported.C_COMPILER>` or
+            :func:`CXX_COMPILER <pycmake.supported.CXX_COMPILER>`.
         :type compiler_id: str
         """
 
@@ -60,9 +63,12 @@ class Compiler(object):
 
         :param name: name of compiler.
         :type name: str
-        :param language: language of compiler
+        :param language: language of project. For more details, see
+            :func:`LANGUAGE <pycmake.supported.LANGUAGE>`.
         :type language: str
-        :param compiler_id: compiler (GCC, G++, CLANG, CLANG++, MSVC or MSVC++)
+        :param compiler_id: id of compiler. For more details, see
+            :func:`C_COMPILER <pycmake.supported.C_COMPILER>` or
+            :func:`CXX_COMPILER <pycmake.supported.CXX_COMPILER>`.
         :type compiler_id: str
         :param version: version of the compiler.
         :type version: int or float

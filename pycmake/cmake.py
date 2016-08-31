@@ -108,11 +108,9 @@ class CMake(object):
         """
         Add Flags to a specific compiler.
 
-        :param compiler_id: supported compiler_id.
-
-            - [GCC or G++],
-            - [CLANG or CLANG++],
-            - [MSVC or MSVC++]
+        :param compiler_id: id of compiler. For more details, see
+            :func:`C_COMPILER <pycmake.supported.C_COMPILER>` or
+            :func:`CXX_COMPILER <pycmake.supported.CXX_COMPILER>`.
         :type compiler_id: str
         :param flags: Flags to add to the compiler.
         :type flags: Flags

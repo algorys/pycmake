@@ -33,8 +33,9 @@ class TestSources(unittest2.TestCase):
     def test_add_sources(self):
         under_test = Sources()
 
-        under_test.add(SRC_TYPE[0], TestSources.src, from_proj=True)
+        under_test.add('src_dir', SRC_TYPE[0], TestSources.src, from_proj=True)
 
+        self.assertEqual('src_dir', under_test.name)
         self.assertTrue(under_test.from_proj)
         self.assertFalse(under_test.is_recursive())
         self.assertEqual(
@@ -45,7 +46,7 @@ class TestSources(unittest2.TestCase):
     def test_sources_recursive(self):
         under_test = Sources()
 
-        under_test.add(SRC_TYPE[0], TestSources.src, from_proj=False)
+        under_test.add('src_dir', SRC_TYPE[0], TestSources.src, from_proj=False)
         under_test.make_recursive(True)
 
         self.assertTrue(under_test.is_recursive())

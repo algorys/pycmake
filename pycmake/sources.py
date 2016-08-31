@@ -29,14 +29,17 @@ class Sources(object):
     __recursive = False
 
     def __init__(self):
+        self.name = None
         self.src_type = None
         self.from_proj = False
         self.sources = []
 
-    def add(self, src_type, sources, from_proj=False):
+    def add(self, name, src_type, sources, from_proj=False):
         """
         Add sources with a specific type.
 
+        :param name: name of the sources.
+        :type name: str
         :param src_type: type of the sources: *DIR* or *FILE*
         :type src_type: SRC_TYPE
         :param from_proj: sources relative from project directory.
@@ -45,6 +48,7 @@ class Sources(object):
         :type sources: list
         """
 
+        self.name = name
         self.src_type = src_type
         self.from_proj = from_proj
         self.sources = sources

@@ -15,7 +15,7 @@ script:
     - pep8 --max-line-length=100 --exclude='*.pyc, *.cfg, *.log' --ignore='E402,W503' pycmake/*
 
     # Coverage and tests
-    - coverage erase
+    - rm -fr pycmake/__pycache__
     - pylint --rcfile=.pylintrc pycmake/*
     - cd test/
     - nosetests -xv --nologcapture --with-coverage --cover-package=pycmake test_*.py

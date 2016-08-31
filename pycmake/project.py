@@ -17,6 +17,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with PyCMake.  If not, see <http://www.gnu.org/licenses/>.
 
+"""
+    Project contains all data related to project.
+"""
+
 
 from pycmake.variables import Variables
 from pycmake.sources import Sources
@@ -25,7 +29,7 @@ from pycmake.sources import SRC_TYPE
 
 class Project(object):
     """
-        CMakeProject contains all data related to project.
+        Class to manage project data.
     """
 
     def __init__(self):
@@ -66,8 +70,8 @@ class Project(object):
 
         try:
             return self.variables.values[name]
-        except KeyError as e:
-            print('Variable [' + name + '] does not exist: ' + str(e))
+        except:
+            raise KeyError('Variable [' + name + '] does not exist.')
 
     def preprocessor_definitions(self, *definitions):
         """
@@ -125,8 +129,8 @@ class Project(object):
             isinstance(minor, int)
             isinstance(patch, int)
             isinstance(tweak, int)
-        except ValueError:
-            print('Version digits must be Integer !')
+        except:
+            raise ValueError('Version digits must be Integer !')
 
         self.version = {
             'major': major,

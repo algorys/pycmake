@@ -17,13 +17,17 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with PyCMake.  If not, see <http://www.gnu.org/licenses/>.
 
+"""
+    Sources contains files or directory for a Project.
+"""
+
 
 from pycmake.supported import SRC_TYPE
 
 
 class Sources(object):
     """
-        Sources contains files and directory for a Project.
+        Class to manage project sources.
     """
 
     __recursive = False

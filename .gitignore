@@ -10,7 +10,7 @@ __pycache__/
 # Test
 cmake/
 test/cmake
-test/all_process_test.py
+test/process_test.py
 
 # Setup
 *.egg

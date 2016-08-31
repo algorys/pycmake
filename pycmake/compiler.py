@@ -17,6 +17,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with PyCMake.  If not, see <http://www.gnu.org/licenses/>.
 
+"""
+    Compiler define every supported compilers.
+"""
+
 from pycmake.supported import LANGUAGE
 from pycmake.supported import C_COMPILER
 from pycmake.supported import CXX_COMPILER
@@ -24,7 +28,7 @@ from pycmake.supported import CXX_COMPILER
 
 class Compiler(object):
     """
-        Compilers define a compiler.
+        Class to define a compiler.
     """
 
     def __init__(self):
@@ -58,6 +62,7 @@ class Compiler(object):
                 raise ValueError('C++ compiler ' + compiler_id + ' is not currently supported !')
 
     def create(self, name, language, compiler_id, version, executable):
+        # pylint: disable=too-many-arguments
         """
         Create a compiler.
 

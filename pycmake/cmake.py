@@ -17,6 +17,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with PyCMake.  If not, see <http://www.gnu.org/licenses/>.
 
+"""
+    CMake manage all common settings to provide CMake project.
+"""
 from pycmake.compiler import Compiler
 from pycmake.flags import Flags
 from pycmake.supported import C_COMPILER
@@ -25,7 +28,7 @@ from pycmake.supported import CXX_COMPILER
 
 class CMake(object):
     """
-        CMake is root module of **PyCMake**. He manage all to provide CMake project.
+        Class to manage all common settings.
     """
 
     def __init__(self):

@@ -17,10 +17,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with PyCMake.  If not, see <http://www.gnu.org/licenses/>.
 
+"""
+    Externals contains all dependencies related to project.
+"""
+
 
 class Externals(object):
     """
-        Externals contains all dependencies related to project.
+        Class to manage dependencies.
     """
 
     def __init__(self):

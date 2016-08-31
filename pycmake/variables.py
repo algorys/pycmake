@@ -17,10 +17,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with PyCMake.  If not, see <http://www.gnu.org/licenses/>.
 
+"""
+    Variables hold all project variables.
+"""
+
 
 class Variables(object):
     """
-        Variables hold all project variables
+        Class to manage variables.
     """
 
     def __init__(self):

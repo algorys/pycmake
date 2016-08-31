@@ -17,10 +17,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with PyCMake.  If not, see <http://www.gnu.org/licenses/>.
 
+"""
+    Flags for compilers.
+"""
 
-class Flags(object):
+
+class Flags(object):  # pylint: disable=too-few-public-methods
     """
-        Flags for general, debug and release compilations
+        Class to manage general, debug and release flags.
     """
 
     def __init__(self, flags_id, general, debug='', release=''):

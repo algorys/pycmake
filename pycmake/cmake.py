@@ -19,8 +19,8 @@
 
 from pycmake.compiler import Compiler
 from pycmake.flags import Flags
-from pycmake.supported import CCompiler
-from pycmake.supported import CXXCompiler
+from pycmake.supported import C_COMPILER
+from pycmake.supported import CXX_COMPILER
 
 
 class CMake(object):
@@ -118,17 +118,17 @@ class CMake(object):
         :type flags: Flags
         """
 
-        if compiler_id == CCompiler[0]:
+        if compiler_id == C_COMPILER[0]:
             self.gnu_flags['C'] = flags
-        elif compiler_id == CXXCompiler[0]:
+        elif compiler_id == CXX_COMPILER[0]:
             self.gnu_flags['C++'] = flags
-        elif compiler_id == CCompiler[1]:
+        elif compiler_id == C_COMPILER[1]:
             self.clang_flags['C'] = flags
-        elif compiler_id == CXXCompiler[1]:
+        elif compiler_id == CXX_COMPILER[1]:
             self.clang_flags['C++'] = flags
-        elif compiler_id == CCompiler[2]:
+        elif compiler_id == C_COMPILER[2]:
             self.msvc_flags['C'] = flags
-        elif compiler_id == CXXCompiler[2]:
+        elif compiler_id == CXX_COMPILER[2]:
             self.msvc_flags['C++'] = flags
         else:
             raise ValueError('Compiler [' + compiler_id + '] is not valid !')

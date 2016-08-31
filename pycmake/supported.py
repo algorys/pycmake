@@ -21,6 +21,8 @@
     This file is only to tell what's compatible or not with **PyCMake**.
 """
 
-Language = ('C', 'C++')
-CCompiler = ('GCC', 'CLANG', 'MSVC')
-CXXCompiler = ('G++', 'CLANG++', 'MSVC++')
+LANGUAGE = ('C', 'C++')
+C_COMPILER = ('GCC', 'CLANG', 'MSVC')
+CXX_COMPILER = ('G++', 'CLANG++', 'MSVC++')
+
+SRC_TYPE = ('DIR', 'FILE')

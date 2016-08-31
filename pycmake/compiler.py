@@ -17,9 +17,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with PyCMake.  If not, see <http://www.gnu.org/licenses/>.
 
-from pycmake.supported import Language
-from pycmake.supported import CCompiler
-from pycmake.supported import CXXCompiler
+from pycmake.supported import LANGUAGE
+from pycmake.supported import C_COMPILER
+from pycmake.supported import CXX_COMPILER
 
 
 class Compiler(object):
@@ -45,13 +45,13 @@ class Compiler(object):
         :type compiler_id: str
         """
 
-        if language not in Language:
+        if language not in LANGUAGE:
             raise ValueError('Language ' + language + ' is not currently supported !')
-        if language is Language[0]:
-            if compiler_id not in CCompiler:
+        if language is LANGUAGE[0]:
+            if compiler_id not in C_COMPILER:
                 raise ValueError('C compiler ' + compiler_id + ' is not currently supported !')
-        if language is Language[1]:
-            if compiler_id not in CXXCompiler:
+        if language is LANGUAGE[1]:
+            if compiler_id not in CXX_COMPILER:
                 raise ValueError('C++ compiler ' + compiler_id + ' is not currently supported !')
 
     def create(self, name, language, compiler_id, version, executable):

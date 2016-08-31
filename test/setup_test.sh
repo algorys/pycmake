@@ -24,17 +24,17 @@ BASE_PATH=$(dirname "$THIS_PATH")
 
 cd $BASE_PATH
 
-echo ' --------- Update and Install packages ... --------- '
-sudo apt-get update
-sudo apt-get -qq install python3-nose
+#echo ' --------- Update and Install packages ... --------- '
+#sudo apt-get update
+#sudo apt-get -qq install python-nose
 
 echo '--------- Upgrade pip ... --------- '
-pip3 install --upgrade pip
+pip install --upgrade pip
 
 # Install prog AND tests requirements :
 #echo '--------- Installing application requirements ... --------- '
 #pip install -r requirements.txt
 echo '--------- Installing application in development mode ... --------- '
-pip3 install -e .
+pip install -e .
 echo '--------- Installing tests requirements ... --------- '
-pip3 install --upgrade -r test/requirements.txt
+pip install --upgrade -r test/requirements.txt

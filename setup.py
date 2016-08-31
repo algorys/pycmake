@@ -9,7 +9,7 @@ try:
     python_version = sys.version_info
 except:
     python_version = (1, 5)
-if python_version < (3,):
+if python_version < (2,7):
     sys.exit("This application requires a minimum Python 3.0.x, sorry!")
 
 # Define paths

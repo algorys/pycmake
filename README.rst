@@ -34,7 +34,7 @@ Development
 Introduction
 ============
 
-PyCMake is a Python module to create, manage and build CMake projects. He tries to cover up the features of CMake.
+PyCMake is a Python module to create, manage and build CMake projects. He tries to cover up the features of CMake. PyCmake is compatible with python 2.7 or above.
 
 Documentation
 =============

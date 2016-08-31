@@ -6,7 +6,7 @@ Installation
 Requirements
 ------------
 
-Actually, PyCMake only require a version of Python up to 3.0. this library is not test under Python 2.7 and above, but should work.
+Actually, PyCMake only require a version of Python (2.7 or above).
 
 Installation
 ------------

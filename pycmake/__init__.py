@@ -31,7 +31,7 @@ from pycmake.externals import Externals
 from pycmake.flags import Flags
 from pycmake.project import Project
 
-# Application version and manifest
+# Application Information
 VERSION = (0, 1, 0)
 __application__ = u"PyCMake"
 __short_version__ = '.'.join((str(each) for each in VERSION[:2]))
